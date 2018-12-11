@@ -2,12 +2,12 @@ package cn.albumenj.service.impl;
 
 import cn.albumenj.bean.UserDetail;
 import cn.albumenj.bean.UserSecurity;
-import cn.albumenj.cache.TokenCache;
 import cn.albumenj.constant.PermissionConst;
 import cn.albumenj.dao.UserSecurityDao;
 import cn.albumenj.service.UserDetailService;
 import cn.albumenj.service.UserSecurityService;
 import cn.albumenj.util.Jwt;
+import cn.albumenj.util.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -25,6 +25,9 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 
     @Autowired
     UserDetailService userDetailService;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     /**
      * 验证登陆
@@ -49,7 +52,11 @@ public class UserSecurityServiceImpl implements UserSecurityService {
             if(token == null) {
                 return null;
             }
-            TokenCache.getInstance().save(token, userSecurityDto.getId());
+            try {
+                redisUtil.set(result.getId().toString(), token);
+            }catch (Exception e){
+                return null;
+            }
             userSecurityDto.setToken(token);
             return userSecurityDto;
         }

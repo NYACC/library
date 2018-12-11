@@ -1,4 +1,4 @@
-package cn.albumenj.filter;
+package cn.albumenj.spring;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -11,7 +11,7 @@ import java.io.*;
  */
 public class RequestWrapper extends HttpServletRequestWrapper {
     private final String body;
-    public RequestWrapper(HttpServletRequest request) throws IOException {
+    private RequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;

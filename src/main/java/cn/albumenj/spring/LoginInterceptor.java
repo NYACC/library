@@ -1,33 +1,30 @@
-package cn.albumenj.interceptor;
+package cn.albumenj.spring;
 
 import cn.albumenj.constant.PageCodeEnum;
-import cn.albumenj.dto.PageCodeDto;
-import cn.albumenj.filter.RequestWrapper;
 import cn.albumenj.util.Jwt;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import cn.albumenj.util.PageCodeUtil;
+import cn.albumenj.util.RedisUtil;
 import org.json.JSONObject;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
 /**
  * @author Albumen
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
+    @Autowired
+    RedisUtil redisUtil;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         RequestWrapper myRequestWrapper = new RequestWrapper((HttpServletRequest) request);
         String body = myRequestWrapper.getBody();
         String token = request.getHeader("Authorization");
 
-        /**
-         * TODO:Redis验证
-         */
         String id;
         if (!body.isEmpty()) {
             JSONObject jsonObject = new JSONObject(body);
@@ -37,24 +34,21 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             id = request.getParameter("loginedUserId");
         }
         if (id != null && !id.isEmpty() && token != null && !token.isEmpty()) {
-            boolean ret = Jwt.verify(token, id);
-            if (ret) {
-                /**
-                 * 验证成功
-                 */
-                return true;
+            String tokenRedis = redisUtil.get(id.toString());
+            if(tokenRedis.compareTo(token)==0) {
+                boolean ret = Jwt.verify(token, id);
+                if (ret) {
+                    /**
+                     * 验证成功
+                     */
+                    return true;
+                }
             }
         }
         /**
          * 验证失败
          */
-        response.setContentType("application/json; charset=utf-8");
-        PrintWriter writer = response.getWriter();
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(new PageCodeDto(PageCodeEnum.NOT_LOGIN));
-        writer.print(json);
-        writer.close();
-        response.flushBuffer();
+        PageCodeUtil.error(response,PageCodeEnum.NOT_LOGIN);
         return false;
 
     }

@@ -42,12 +42,13 @@
 
   <filter>
     <filter-name>requestFilter</filter-name>
-    <filter-class>cn.albumenj.filter.HttpServletFilter</filter-class>
+    <filter-class>cn.albumenj.spring.HttpServletFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>requestFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
 
   <servlet>
     <servlet-name>web-app</servlet-name>
@@ -57,6 +58,10 @@
     <init-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>classpath:spring/applicationContext-*.xml</param-value>
+    </init-param>
+    <init-param>
+      <param-name>throwExceptionIfNoHandlerFound</param-name>
+      <param-value>true</param-value>
     </init-param>
     <!-- 使系统在启动时装在servlet而不是第一个servlet被访问 -->
     <load-on-startup>1</load-on-startup>
@@ -72,5 +77,4 @@
     <session-timeout>120</session-timeout>
   </session-config>
 
-  <!-- TODO:错误页面 -->
 </web-app>

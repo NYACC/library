@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!--最大空闲数 -->
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <!--连接池的最大数据库连接数 -->
+        <property name="maxTotal" value="${redis.maxTotal}" />
+        <!--最大建立连接等待时间 -->
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
+        <!--逐出连接的最小空闲时间 默认1800000毫秒(30分钟) -->
+        <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}" />
+        <!--每次逐出检查时 逐出的最大数目 如果为负数就是 : 1/abs(n), 默认3 -->
+        <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}" />
+        <!--逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}" />
+    </bean>
+
+    <!--redis连接工厂 -->
+    <bean id="jedisConnectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          destroy-method="destroy"
+          p:poolConfig-ref="jedisPoolConfig"
+          p:hostName="${redis.host.ip}"
+          p:port="${redis.port}"
+          p:timeout="${redis.timeout}"/>
+
+    <!-- redis操作模板，这里采用尽量面向对象的模板 -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory" />
+        <!-- 指定redis中key-value的序列化方式（此处省略） -->
+    </bean>
+
+    <!--redis工具类 （也可以通过注解的方式注入） -->
+    <bean id="redisUtil" class="cn.albumenj.util.RedisUtil">
+        <property name="redisTemplate" ref="redisTemplate" />
+    </bean>
+</beans>

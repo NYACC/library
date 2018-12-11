@@ -1,4 +1,6 @@
-package cn.albumenj.filter;
+package cn.albumenj.spring;
+
+import cn.albumenj.spring.RequestWrapper;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

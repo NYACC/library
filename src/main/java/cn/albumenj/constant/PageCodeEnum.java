@@ -64,7 +64,11 @@ public enum PageCodeEnum {
     /**
      * 认证失败
      */
-    NOT_LOGIN(2000,"认证失败"),;
+    NOT_LOGIN(2000,"认证失败"),
+    /**
+     * 系统错误
+     */
+    SYSTEM_ERROR(2001,"系统错误"),;
 
     private Integer code;
     private String msg;

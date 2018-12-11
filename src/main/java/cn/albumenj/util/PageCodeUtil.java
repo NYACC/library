@@ -2,6 +2,10 @@ package cn.albumenj.util;
 
 import cn.albumenj.constant.PageCodeEnum;
 import cn.albumenj.dto.PageCodeDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 /**
  * @author Albumen
@@ -50,5 +54,19 @@ public class PageCodeUtil {
         else {
             return new PageCodeDto(PageCodeEnum.MODIFY_FAILED);
         }
+    }
+
+    public static void error(HttpServletResponse response,PageCodeEnum pageCodeEnum) throws Exception {
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter writer = response.getWriter();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(new PageCodeDto(pageCodeEnum));
+        writer.print(json);
+        writer.close();
+        response.flushBuffer();
+    }
+
+    public static PageCodeDto error(){
+        return new PageCodeDto(PageCodeEnum.SYSTEM_ERROR);
     }
 }
