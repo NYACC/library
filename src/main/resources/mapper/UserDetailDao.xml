@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.albumen.library.dao.UserDetailDao">
+    <select id="select" resultType="UserDetail">
+        select id,user_id,sex,name,location from user_detail
+        where user_id = #{userId}
+    </select>
+
+    <select id="selectByPermission" resultType="UserDetail">
+        select c.id,c.user_id,c.sex,c.name,c.location
+        from user_detail c,user_security s
+        where c.user_id=s.id and s.permission>=(select permission from user_security where id = #{loginedUserId})
+        <if test="start != null and count != null">
+            limit #{start},#{count}
+        </if>
+    </select>
+
+    <insert id="insert">
+        insert into user_detail(user_id, sex, name, location)
+        values (#{userId},#{sex},#{name},#{location})
+    </insert>
+
+    <delete id="delete">
+        delete from user_detail
+        where id = #{id}
+    </delete>
+
+    <update id="update">
+        update user_detail
+        <set>
+            <if test="userId!=null">
+                user_id = #{userId},
+            </if>
+            <if test="sex!=null">
+                sex = #{sex},
+            </if>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="location!=null">
+                location = #{location},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

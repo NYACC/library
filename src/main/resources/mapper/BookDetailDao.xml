@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.albumen.library.dao.BookDetailDao">
+    <insert id="add">
+        insert into library.book_detail(isbn, name, category_id, author, rent)
+        values (#{isbn},#{name},#{categoryId},#{author},#{rent})
+    </insert>
+
+    <delete id="delete">
+        delete from book_detail
+        where id = #{id}
+    </delete>
+
+    <update id="update">
+        update book_detail
+        <set>
+            <if test="isbn!=null">
+                isbn = #{isbn},
+            </if>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="categoryId!=null">
+                category_id = #{categoryId},
+            </if>
+            <if test="author!=null">
+                author = #{author},
+            </if>
+            <if test="rent!=null">
+                rent = #{rent},
+            </if>
+            <if test="rentTime!=null">
+                rent_time = #{rentTime},
+            </if>
+            <if test="rentBackTime!=null">
+                rent_back_time = #{rentBackTime},
+            </if>
+            <if test="rentUserId!=null">
+                rent_user_id = #{rentUserId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="back">
+        update book_detail
+        <set>
+            <if test="rent!=null">
+                rent = #{rent},
+            </if>
+                rent_time = #{rentTime},
+                rent_back_time = #{rentBackTime},
+                rent_user_id = #{rentUserId},
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectById" resultType="BookDetail">
+        SELECT
+            book_detail.id,
+            book_detail.isbn,
+            book_detail.`name`,
+            book_detail.category_id,
+            book_detail.author,
+            book_detail.rent,
+            book_detail.rent_time,
+            book_detail.rent_back_time,
+            book_detail.rent_user_id,
+            book_category.`name` AS category
+        FROM
+            book_detail
+                LEFT JOIN book_category
+                          ON book_category.id = book_detail.category_id
+        WHERE
+            book_detail.id = #{id}
+    </select>
+
+    <select id="selectRent" resultType="BookDetail">
+        SELECT
+            book_detail.id,
+            book_detail.isbn,
+            book_detail.`name`,
+            book_detail.category_id,
+            book_detail.author,
+            book_detail.rent,
+            book_detail.rent_time,
+            book_detail.rent_back_time,
+            book_detail.rent_user_id,
+            book_category.`name` AS category
+        FROM
+            book_detail
+                LEFT JOIN book_category
+                          ON book_category.id = book_detail.category_id
+        WHERE
+            book_detail.rent = '${@cn.albumenj.constant.RentConst@RENTED}'
+
+        <if test="start != null and count != null">
+            limit #{start},#{count}
+        </if>
+    </select>
+
+    <select id="selectUnRent" resultType="BookDetail">
+        SELECT
+            book_detail.id,
+            book_detail.isbn,
+            book_detail.`name`,
+            book_detail.category_id,
+            book_detail.author,
+            book_detail.rent,
+            book_detail.rent_time,
+            book_detail.rent_back_time,
+            book_detail.rent_user_id,
+            book_category.`name` AS category
+        FROM
+            book_detail
+                LEFT JOIN book_category
+                          ON book_category.id = book_detail.category_id
+        WHERE
+            book_detail.rent = '${@cn.albumenj.constant.RentConst@UNRENT}'
+
+        <if test="start != null and count != null">
+            limit #{start},#{count}
+        </if>
+    </select>
+
+    <select id="selectAll" resultType="BookDetail">
+        SELECT
+            book_detail.id,
+            book_detail.isbn,
+            book_detail.`name`,
+            book_detail.category_id,
+            book_detail.author,
+            book_detail.rent,
+            book_detail.rent_time,
+            book_detail.rent_back_time,
+            book_detail.rent_user_id,
+            book_category.`name` AS category
+        FROM
+            book_detail
+                LEFT JOIN book_category
+                          ON book_category.id = book_detail.category_id
+
+        <if test="start != null and count != null">
+            limit #{start},#{count}
+        </if>
+    </select>
+
+    <select id="selectLike" resultType="BookDetail">
+        SELECT
+            book_detail.id,
+            book_detail.isbn,
+            book_detail.`name`,
+            book_detail.category_id,
+            book_detail.author,
+            book_detail.rent,
+            book_detail.rent_time,
+            book_detail.rent_back_time,
+            book_detail.rent_user_id,
+            book_category.`name` AS category
+        FROM
+            book_detail
+            LEFT JOIN book_category
+                ON book_category.id = book_detail.category_id
+        WHERE
+            1 = 1
+            <if test="name != null">
+                AND book_detail.`name` LIKE CONCAT(CONCAT('%',#{name}),'%')
+            </if>
+            <if test="isbn != null">
+                AND book_detail.`isbn` LIKE CONCAT(CONCAT('%',#{isbn}),'%')
+            </if>
+            <if test="author != null">
+                AND book_detail.`author` LIKE CONCAT(CONCAT('%',#{author}),'%')
+            </if>
+    </select>
+
+</mapper>
