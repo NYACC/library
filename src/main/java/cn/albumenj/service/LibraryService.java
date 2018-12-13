@@ -39,7 +39,7 @@ public interface LibraryService {
      * @param library
      * @return
      */
-    int count(Library library);
+    int selectCount(Library library);
 
     /**
      * 添加图书馆

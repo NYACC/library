@@ -72,7 +72,7 @@ public class LibraryServiceImpl implements LibraryService {
      * @return
      */
     @Override
-    public int count(Library library) {
+    public int selectCount(Library library) {
         int count = libraryDao.count();
 
         return count;

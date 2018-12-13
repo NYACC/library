@@ -39,7 +39,7 @@ public interface BookDetailService {
      * @param bookDetail
      * @return
      */
-    boolean rentBook(BookDetail bookDetail);
+    boolean updateRentBook(BookDetail bookDetail);
 
     /**
      * 书籍归还
@@ -47,7 +47,7 @@ public interface BookDetailService {
      * @param bookDetail
      * @return
      */
-    boolean backBook(BookDetail bookDetail);
+    boolean updateBackBook(BookDetail bookDetail);
 
     /**
      * 通过ID查找书籍

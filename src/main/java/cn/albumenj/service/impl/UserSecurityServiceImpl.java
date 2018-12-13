@@ -63,6 +63,18 @@ public class UserSecurityServiceImpl implements UserSecurityService {
     }
 
     /**
+     * 登出
+     *
+     * @param userSecurity
+     * @return 返回查询结果
+     */
+    @Override
+    public boolean logout(UserSecurity userSecurity) {
+        boolean ret = redisUtil.delete(userSecurity.getLoginedUserId().toString());
+        return ret;
+    }
+
+    /**
      * 添加安全组用户
      *
      * @param userSecurity
@@ -101,7 +113,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
      * @return
      */
     @Override
-    public boolean modifyUser(UserSecurity userSecurity) {
+    public boolean updateUser(UserSecurity userSecurity) {
 
         boolean flag = checkPermission(getPermission(userSecurity.getLoginedUserId()),
                 userSecurity.getPermission());
@@ -223,7 +235,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
      * @return
      */
     @Override
-    public List<UserSecurity> getList(UserSecurity userSecurity) {
+    public List<UserSecurity> selectList(UserSecurity userSecurity) {
         userSecurity.setId(userSecurity.getLoginedUserId());
         UserSecurity userSecurityTmp = userSecurityDao.selectById(userSecurity);
         if(userSecurity == null) {
@@ -248,7 +260,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
      * @return
      */
     @Override
-    public int count(UserSecurity userSecurity) {
+    public int selectCount(UserSecurity userSecurity) {
         userSecurity.setId(userSecurity.getLoginedUserId());
         UserSecurity userSecurityTmp = userSecurityDao.selectById(userSecurity);
         if(userSecurityTmp == null) {

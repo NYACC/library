@@ -94,7 +94,7 @@ public class BookDetailServiceImpl implements BookDetailService {
      * @return
      */
     @Override
-    public boolean rentBook(BookDetail bookDetail) {
+    public boolean updateRentBook(BookDetail bookDetail) {
         boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId())
                                 || bookDetail.getLoginedUserId().equals(bookDetail.getRentUserId());
         if(permission) {
@@ -134,7 +134,7 @@ public class BookDetailServiceImpl implements BookDetailService {
      * @return
      */
     @Override
-    public boolean backBook(BookDetail bookDetail) {
+    public boolean updateBackBook(BookDetail bookDetail) {
         boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId())
                 || bookDetail.getLoginedUserId().equals(bookDetail.getRentUserId());
         if(permission) {

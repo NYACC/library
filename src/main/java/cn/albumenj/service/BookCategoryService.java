@@ -30,7 +30,7 @@ public interface BookCategoryService {
      * @param bookCategory
      * @return
      */
-    boolean udpate(BookCategory bookCategory);
+    boolean update(BookCategory bookCategory);
 
     /**
      * 获取所有分类

@@ -1,6 +1,8 @@
 package cn.albumenj.controller;
 
+import cn.albumenj.annotation.ControllerLog;
 import cn.albumenj.bean.UserDetail;
+import cn.albumenj.constant.LevelConst;
 import cn.albumenj.constant.PageCodeEnum;
 import cn.albumenj.dto.PageCodeDto;
 import cn.albumenj.service.UserDetailService;
@@ -19,16 +21,19 @@ public class UserDetailController {
     @Autowired
     UserDetailService userDetailService;
 
+    @ControllerLog(description = "SelectUserDetail",level = LevelConst.INFO)
     @RequestMapping(path = "/selectById",method = RequestMethod.GET)
     public PageCodeDto selectById(UserDetail userDetail) {
         return PageCodeUtil.get(userDetailService.selectById(userDetail));
     }
 
+    @ControllerLog(description = "SelectUserDetail",level = LevelConst.INFO)
     @RequestMapping(path = "/selectList",method = RequestMethod.GET)
     public PageCodeDto selectList(UserDetail userDetail) {
         return PageCodeUtil.get(userDetailService.selectByPermission(userDetail));
     }
 
+    @ControllerLog(description = "UpdateUserDetail",level = LevelConst.CRITICAL)
     @RequestMapping(path = "/update",method = RequestMethod.POST)
     public PageCodeDto update(@RequestBody UserDetail userDetail) {
         return PageCodeUtil.update(userDetailService.update(userDetail));

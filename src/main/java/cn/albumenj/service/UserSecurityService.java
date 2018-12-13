@@ -16,6 +16,13 @@ public interface UserSecurityService {
     UserSecurity login(UserSecurity userSecurity);
 
     /**
+     * 登出
+     * @param userSecurity
+     * @return 返回查询结果
+     */
+    boolean logout(UserSecurity userSecurity);
+
+    /**
      * 添加安全组用户
      * @param userSecurity
      * @return
@@ -27,21 +34,21 @@ public interface UserSecurityService {
      * @param userSecurity
      * @return
      */
-    boolean modifyUser(UserSecurity userSecurity);
+    boolean updateUser(UserSecurity userSecurity);
 
     /**
      * 有限制性枚举
      * @param userSecurity 鉴定权限
      * @return
      */
-    List<UserSecurity> getList(UserSecurity userSecurity);
+    List<UserSecurity> selectList(UserSecurity userSecurity);
 
     /**
      * 计算用户量
      * @param userSecurity 鉴定权限
      * @return
      */
-    int count(UserSecurity userSecurity);
+    int selectCount(UserSecurity userSecurity);
 
     /**
      * 删除用户

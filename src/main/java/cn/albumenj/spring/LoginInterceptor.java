@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if(handler instanceof DefaultServletHttpRequestHandler) {
+            PageCodeUtil.error(response, PageCodeEnum.SYSTEM_ERROR);
+            return false;
+        }
         RequestWrapper myRequestWrapper = new RequestWrapper((HttpServletRequest) request);
         String body = myRequestWrapper.getBody();
         String token = request.getHeader("Authorization");
@@ -35,7 +40,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         }
         if (id != null && !id.isEmpty() && token != null && !token.isEmpty()) {
             String tokenRedis = redisUtil.get(id.toString());
-            if(tokenRedis.compareTo(token)==0) {
+            if(tokenRedis!= null && tokenRedis.compareTo(token)==0) {
                 boolean ret = Jwt.verify(token, id);
                 if (ret) {
                     /**

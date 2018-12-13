@@ -11,7 +11,7 @@ import java.io.*;
  */
 public class RequestWrapper extends HttpServletRequestWrapper {
     private final String body;
-    private RequestWrapper(HttpServletRequest request) throws IOException {
+    public RequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;

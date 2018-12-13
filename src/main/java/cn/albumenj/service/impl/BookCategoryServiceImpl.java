@@ -63,7 +63,7 @@ public class BookCategoryServiceImpl implements BookCategoryService {
      * @return
      */
     @Override
-    public boolean udpate(BookCategory bookCategory) {
+    public boolean update(BookCategory bookCategory) {
         boolean flag = userSecurityService.checkIdCategoryStaff(bookCategory.getLoginedUserId());
         if(flag) {
             int row = bookCategoryDao.update(bookCategory);

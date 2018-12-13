@@ -62,6 +62,14 @@ public enum PageCodeEnum {
      */
     BACK_FAILED(1601,"归还失败"),
     /**
+     * 登出成功
+     */
+    LOGOUT_SUCCESS(1600,"登出成功"),
+    /**
+     * 登出失败
+     */
+    LOGOUT_FAILED(1601,"登出失败"),
+    /**
      * 认证失败
      */
     NOT_LOGIN(2000,"认证失败"),
