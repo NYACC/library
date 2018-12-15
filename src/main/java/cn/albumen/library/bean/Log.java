@@ -12,6 +12,7 @@ public class Log {
     private String ip;
     private String content;
     private Date createTime;
+    private String level;
 
     public Log() {
         this.id = UUID.randomUUID().toString();
@@ -56,5 +57,13 @@ public class Log {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

@@ -2,6 +2,7 @@ package cn.albumen.library.authentication;
 
 import cn.albumen.library.bean.Log;
 import cn.albumen.library.constant.HttpConst;
+import cn.albumen.library.constant.LevelConst;
 import cn.albumen.library.constant.PageCodeEnum;
 import cn.albumen.library.dao.LogDao;
 import cn.albumen.library.util.Jwt;
@@ -51,6 +52,7 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler, Authent
             log.setUser(Integer.parseInt(authentication.getName()));
             log.setIp(NetworkUtil.getIpAddress(request));
             log.setContent("Action: Login Params: \"userNo\": \"" + authentication.getName() + "\" ");
+            log.setLevel(LevelConst.CRITICAL);
             logDao.insert(log);
         } catch (Exception e) {
             try {

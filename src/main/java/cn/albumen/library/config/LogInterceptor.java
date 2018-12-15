@@ -1,8 +1,7 @@
-package cn.albumen.library.spring;
+package cn.albumen.library.config;
 
 import cn.albumen.library.annotation.ControllerLog;
 import cn.albumen.library.bean.Log;
-import cn.albumen.library.config.RequestWrapper;
 import cn.albumen.library.constant.HttpConst;
 import cn.albumen.library.dao.LogDao;
 import cn.albumen.library.util.NetworkUtil;
@@ -91,6 +90,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
                 log.setUser(user);
                 log.setContent(stringBuilder.toString());
                 log.setIp(NetworkUtil.getIpAddress(request));
+                log.setLevel(annotation.level());
                 logDao.insert(log);
             } catch (Exception e) {
                 e.printStackTrace();
