@@ -22,20 +22,6 @@ public class UserSecurityController {
     @Autowired
     UserSecurityService userSecurityService;
 
-    @ControllerLog(description = "Login", level = LevelConst.CRITICAL)
-    @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public PageCodeDto login(@RequestBody UserSecurity userSecurity) {
-        UserSecurity userSecurityDto = userSecurityService.login(userSecurity);
-        PageCodeDto pageCodeDto;
-        if (userSecurityDto != null) {
-            userSecurityDto.setPassword(null);
-            pageCodeDto = new PageCodeDto(PageCodeEnum.LOGIN_SUCCESS, userSecurityDto);
-        } else {
-            pageCodeDto = new PageCodeDto(PageCodeEnum.LOGIN_FAILED);
-        }
-        return pageCodeDto;
-    }
-
     @ControllerLog(description = "Logout", level = LevelConst.CRITICAL)
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
     public PageCodeDto logout(UserSecurity userSecurity) {
@@ -76,5 +62,11 @@ public class UserSecurityController {
     @RequestMapping(path = "/delete", method = RequestMethod.GET)
     public PageCodeDto delete(UserSecurity userSecurity) {
         return PageCodeUtil.delete(userSecurityService.delete(userSecurity));
+    }
+
+    @ControllerLog(description = "SelectUserSecurity", level = LevelConst.INFO)
+    @RequestMapping(path = "/selectbyid", method = RequestMethod.GET)
+    public PageCodeDto selectById(UserSecurity userSecurity) {
+        return PageCodeUtil.get(userSecurityService.selectById(userSecurity));
     }
 }

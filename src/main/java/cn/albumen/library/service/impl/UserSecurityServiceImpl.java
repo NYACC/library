@@ -7,7 +7,6 @@ import cn.albumen.library.dao.UserSecurityDao;
 import cn.albumen.library.service.UserDetailService;
 import cn.albumen.library.service.UserSecurityService;
 import cn.albumen.library.util.RedisUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -45,9 +44,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
         if (flag == false) {
             return null;
         } else {
-            UserSecurity userSecurityDto = new UserSecurity();
-            BeanUtils.copyProperties(result, userSecurityDto);
-            return userSecurityDto;
+            return result;
         }
     }
 
@@ -287,4 +284,16 @@ public class UserSecurityServiceImpl implements UserSecurityService {
         }
     }
 
+    /**
+     * 通过编号查找用户
+     *
+     * @param userSecurity
+     * @return
+     */
+    @Override
+    public UserSecurity selectById(UserSecurity userSecurity) {
+        userSecurity = userSecurityDao.selectById(userSecurity);
+        userSecurity.setPassword(null);
+        return userSecurity;
+    }
 }

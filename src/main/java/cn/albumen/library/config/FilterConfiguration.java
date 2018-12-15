@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 默认拦截器配置
+ * 修复OutputSteam只能读取一次
  *
  * @author Albumen
  */

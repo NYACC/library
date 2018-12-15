@@ -49,6 +49,14 @@ public interface UserSecurityService {
     List<UserSecurity> selectList(UserSecurity userSecurity);
 
     /**
+     * 通过编号查找用户
+     *
+     * @param userSecurity
+     * @return
+     */
+    UserSecurity selectById(UserSecurity userSecurity);
+
+    /**
      * 计算用户量
      *
      * @param userSecurity 鉴定权限
