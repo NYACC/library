@@ -13,7 +13,7 @@ public class Log {
     private String content;
     private Date createTime;
 
-    public Log(){
+    public Log() {
         this.id = UUID.randomUUID().toString();
         this.createTime = new Date();
     }

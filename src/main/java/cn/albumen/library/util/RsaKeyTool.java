@@ -2,7 +2,7 @@ package cn.albumen.library.util;
 
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openssl.PEMParser;
+import org.bouncycastle.openssl.PEMReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,10 +13,12 @@ import java.security.Security;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
-import static cn.albumen.library.constant.SecurityConfig.*;
 import static cn.albumen.library.constant.SecurityConfig.PEM_KEY_PATH;
 
 /**
+ * 单例模式生成RSA
+ * 该方法耗时较久
+ *
  * @author Albumen
  */
 public class RsaKeyTool {
@@ -27,10 +29,10 @@ public class RsaKeyTool {
     private RSAPublicKey publicKey;
 
 
-    public RsaKeyTool(){
-        try{
+    public RsaKeyTool() {
+        try {
             loadPublicKey();
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error(e.toString());
         }
     }
@@ -51,7 +53,7 @@ public class RsaKeyTool {
     private void loadPublicKey() throws Exception {
         BufferedReader br = new BufferedReader(new FileReader(PEM_KEY_PATH));
         Security.addProvider(new BouncyCastleProvider());
-        KeyPair kp = (KeyPair) new PEMParser(br).readObject();
+        KeyPair kp = (KeyPair) new PEMReader(br).readObject();
 
         this.privateKey = (RSAPrivateKey) kp.getPrivate();
         this.publicKey = (RSAPublicKey) kp.getPublic();

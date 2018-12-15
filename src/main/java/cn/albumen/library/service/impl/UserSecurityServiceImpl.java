@@ -6,7 +6,6 @@ import cn.albumen.library.constant.PermissionConst;
 import cn.albumen.library.dao.UserSecurityDao;
 import cn.albumen.library.service.UserDetailService;
 import cn.albumen.library.service.UserSecurityService;
-import cn.albumen.library.util.Jwt;
 import cn.albumen.library.util.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,16 +47,6 @@ public class UserSecurityServiceImpl implements UserSecurityService {
         } else {
             UserSecurity userSecurityDto = new UserSecurity();
             BeanUtils.copyProperties(result, userSecurityDto);
-            String token = Jwt.create(result.getId().toString());
-            if(token == null) {
-                return null;
-            }
-            try {
-                redisUtil.set(result.getId().toString(), token);
-            }catch (Exception e){
-                return null;
-            }
-            userSecurityDto.setToken(token);
             return userSecurityDto;
         }
     }
@@ -90,15 +79,14 @@ public class UserSecurityServiceImpl implements UserSecurityService {
             int row;
             try {
                 row = userSecurityDao.addUser(userSecurity);
-            }catch (DataAccessException e) {
+            } catch (DataAccessException e) {
                 row = 0;
             }
-            if(row == 1) {
+            if (row == 1) {
                 userSecurity = userSecurityDao.selectByNo(userSecurity);
                 userDetailService.addBlank(userSecurity.getId());
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
         } else {
@@ -118,16 +106,15 @@ public class UserSecurityServiceImpl implements UserSecurityService {
         boolean flag = checkPermission(getPermission(userSecurity.getLoginedUserId()),
                 userSecurity.getPermission());
 
-        if(flag) {
+        if (flag) {
             int row;
             try {
                 row = userSecurityDao.update(userSecurity);
-            }catch (DataAccessException e) {
+            } catch (DataAccessException e) {
                 row = 0;
             }
             return (row == 1);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -135,28 +122,28 @@ public class UserSecurityServiceImpl implements UserSecurityService {
     /**
      * 防止越权
      *
-     * @param login 已登录用户
+     * @param login    已登录用户
      * @param operated 被操作用户
      * @return
      */
-    private boolean checkPermission(Integer login,Integer operated) {
+    private boolean checkPermission(Integer login, Integer operated) {
         boolean flag = login.equals(PermissionConst.ADMINISTRATOR)
-                            ||(login.equals(PermissionConst.CURATOR)
-                                    &&!operated.equals(PermissionConst.ADMINISTRATOR)
-                            ||login.equals(operated));
+                || (login.equals(PermissionConst.CURATOR)
+                && !operated.equals(PermissionConst.ADMINISTRATOR)
+                || login.equals(operated));
         return flag;
     }
 
     /**
      * 防止越权
      *
-     * @param login 已登录用户
+     * @param login    已登录用户
      * @param operated 被操作用户
      * @return
      */
     @Override
-    public boolean checkIDPermission(Integer login,Integer operated) {
-        return checkPermission(getPermission(login),getPermission(operated));
+    public boolean checkIDPermission(Integer login, Integer operated) {
+        return checkPermission(getPermission(login), getPermission(operated));
     }
 
     /**
@@ -193,8 +180,8 @@ public class UserSecurityServiceImpl implements UserSecurityService {
     @Override
     public boolean checkIdCategoryStaff(Integer user) {
         boolean flag = (getPermission(user) == PermissionConst.CATEGORY_STAFF
-                        || getPermission(user) == PermissionConst.CURATOR
-                        || getPermission(user) == PermissionConst.ADMINISTRATOR);
+                || getPermission(user) == PermissionConst.CURATOR
+                || getPermission(user) == PermissionConst.ADMINISTRATOR);
         return flag;
     }
 
@@ -216,14 +203,13 @@ public class UserSecurityServiceImpl implements UserSecurityService {
      * @param id
      * @return
      */
-    private int getPermission(Integer id){
+    private int getPermission(Integer id) {
         UserSecurity userSecurity = new UserSecurity();
         userSecurity.setId(id);
         UserSecurity result = userSecurityDao.selectById(userSecurity);
-        if(result == null) {
+        if (result == null) {
             return 0;
-        }
-        else {
+        } else {
             return result.getPermission();
         }
     }
@@ -238,16 +224,16 @@ public class UserSecurityServiceImpl implements UserSecurityService {
     public List<UserSecurity> selectList(UserSecurity userSecurity) {
         userSecurity.setId(userSecurity.getLoginedUserId());
         UserSecurity userSecurityTmp = userSecurityDao.selectById(userSecurity);
-        if(userSecurity == null) {
+        if (userSecurity == null) {
             return null;
         }
         userSecurityTmp.setStart(userSecurity.getStart());
         userSecurityTmp.setCount(userSecurity.getCount());
         List<UserSecurity> result = userSecurityDao.selectLimited(userSecurityTmp);
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             return null;
         }
-        for(UserSecurity userSecurityTemp:result) {
+        for (UserSecurity userSecurityTemp : result) {
             userSecurityTemp.setPassword(null);
         }
         return result;
@@ -263,7 +249,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
     public int selectCount(UserSecurity userSecurity) {
         userSecurity.setId(userSecurity.getLoginedUserId());
         UserSecurity userSecurityTmp = userSecurityDao.selectById(userSecurity);
-        if(userSecurityTmp == null) {
+        if (userSecurityTmp == null) {
             return 0;
         }
         return userSecurityDao.countUser(userSecurityTmp);
@@ -283,11 +269,10 @@ public class UserSecurityServiceImpl implements UserSecurityService {
         UserSecurity userSecurityOperated = new UserSecurity();
         userSecurityOperated.setId(userSecurity.getId());
         userSecurityOperated = userSecurityDao.selectById(userSecurityOperated);
-        if(userSecurityLogin == null || userSecurityOperated == null) {
+        if (userSecurityLogin == null || userSecurityOperated == null) {
             return false;
-        }
-        else {
-            if(checkPermission(userSecurityLogin.getPermission(),userSecurityOperated.getPermission())) {
+        } else {
+            if (checkPermission(userSecurityLogin.getPermission(), userSecurityOperated.getPermission())) {
                 UserDetail userDetail = new UserDetail();
                 userDetail.setUserId(userSecurity.getId());
                 userDetail.setLoginedUserId(userSecurity.getLoginedUserId());
@@ -296,8 +281,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
                 boolean flag = userDetailService.delete(userDetail);
                 int row = userSecurityDao.delete(userSecurity);
                 return (row == 1) && flag;
-            }
-            else {
+            } else {
                 return false;
             }
         }

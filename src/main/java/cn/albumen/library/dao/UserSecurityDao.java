@@ -45,7 +45,7 @@ public interface UserSecurityDao {
     /**
      * 有限制性枚举
      *
-     * @param userSecurity  当前登陆用户权限
+     * @param userSecurity 当前登陆用户权限
      * @return
      */
     List<UserSecurity> selectLimited(UserSecurity userSecurity);
@@ -53,13 +53,14 @@ public interface UserSecurityDao {
     /**
      * 计算用户量
      *
-     * @param userSecurity  当前登陆用户，用于鉴定权限
+     * @param userSecurity 当前登陆用户，用于鉴定权限
      * @return
      */
     int countUser(UserSecurity userSecurity);
 
     /**
      * 删除用户
+     *
      * @param userSecurity
      * @return
      */

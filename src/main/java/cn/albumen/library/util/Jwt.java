@@ -23,18 +23,18 @@ public class Jwt {
     public static String create(String userName) {
         String token = null;
         try {
-            token= JWT.create()
+            token = JWT.create()
                     .withIssuer("Albumen")
                     .withSubject(userName)
-                    .withExpiresAt(new Date(System.currentTimeMillis()+ SecurityConfig.EXP_TIME))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConfig.EXP_TIME))
                     .sign(algorithmRS);
-        } catch (JWTCreationException exception){
+        } catch (JWTCreationException exception) {
             return null;
         }
         return token;
     }
 
-    public static boolean verify(String token,String userName) {
+    public static boolean verify(String token, String userName) {
         try {
             JWTVerifier verifier = JWT.require(algorithmRS)
                     .withIssuer("Albumen")
@@ -42,7 +42,7 @@ public class Jwt {
                     .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(token);
             return true;
-        } catch (JWTVerificationException exception){
+        } catch (JWTVerificationException exception) {
             return false;
             //Invalid signature/claims
         }
@@ -55,7 +55,7 @@ public class Jwt {
                     .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(token);
             return true;
-        } catch (JWTVerificationException exception){
+        } catch (JWTVerificationException exception) {
             return false;
             //Invalid signature/claims
         }

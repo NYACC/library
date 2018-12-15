@@ -32,7 +32,7 @@ public class UserDetailServiceImpl implements UserDetailService {
         UserDetail userDetail = new UserDetail();
         userDetail.setUserId(userId);
         userDetail.setLocation("");
-        userDetail.setSex(SexConst.UNKNOW);
+        userDetail.setSex(SexConst.UNKNOWN);
         userDetail.setName("");
         userDetailDao.insert(userDetail);
         return false;
@@ -47,15 +47,14 @@ public class UserDetailServiceImpl implements UserDetailService {
     @Override
     public boolean update(UserDetail userDetail) {
         UserDetail userDetailTmp = userDetailDao.select(userDetail);
-        if(userDetailTmp == null || (!userDetail.getId().equals(userDetailTmp.getId()))) {
+        if (userDetailTmp == null || (!userDetail.getId().equals(userDetailTmp.getId()))) {
             return false;
         }
-        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginedUserId(),userDetail.getUserId());
-        if(flag) {
+        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginedUserId(), userDetail.getUserId());
+        if (flag) {
             int row = userDetailDao.update(userDetail);
             return (row == 1);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -68,13 +67,12 @@ public class UserDetailServiceImpl implements UserDetailService {
      */
     @Override
     public boolean delete(UserDetail userDetail) {
-        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginedUserId(),userDetail.getUserId());
-        if(flag) {
+        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginedUserId(), userDetail.getUserId());
+        if (flag) {
             userDetail = userDetailDao.select(userDetail);
             int row = userDetailDao.delete(userDetail);
             return (row == 1);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -88,10 +86,9 @@ public class UserDetailServiceImpl implements UserDetailService {
     @Override
     public List<UserDetail> selectByPermission(UserDetail userDetail) {
         List<UserDetail> userDetails = userDetailDao.selectByPermission(userDetail);
-        if(userDetails.isEmpty()) {
+        if (userDetails.isEmpty()) {
             return null;
-        }
-        else {
+        } else {
             return userDetails;
         }
     }
@@ -104,11 +101,10 @@ public class UserDetailServiceImpl implements UserDetailService {
      */
     @Override
     public UserDetail selectById(UserDetail userDetail) {
-        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginedUserId(),userDetail.getUserId());
-        if(flag) {
+        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginedUserId(), userDetail.getUserId());
+        if (flag) {
             return userDetailDao.select(userDetail);
-        }
-        else {
+        } else {
             return null;
         }
     }

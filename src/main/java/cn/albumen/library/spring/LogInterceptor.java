@@ -2,6 +2,8 @@ package cn.albumen.library.spring;
 
 import cn.albumen.library.annotation.ControllerLog;
 import cn.albumen.library.bean.Log;
+import cn.albumen.library.config.RequestWrapper;
+import cn.albumen.library.constant.HttpConst;
 import cn.albumen.library.dao.LogDao;
 import cn.albumen.library.util.NetworkUtil;
 import org.json.JSONException;
@@ -49,19 +51,18 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
                 stringBuilder.append("Action: ");
                 stringBuilder.append(annotation.description());
 
-                String post = "POST";
                 stringBuilder.append(" Params: ");
                 Integer user;
-                if (request.getMethod().compareTo(post) == 0) {
+                if (request.getMethod().compareToIgnoreCase(HttpConst.POST) == 0) {
                     /**
                      * POST
                      */
-                    RequestWrapper myRequestWrapper = new RequestWrapper((HttpServletRequest) request);
+                    RequestWrapper myRequestWrapper = new RequestWrapper(request);
                     String body = myRequestWrapper.getBody();
                     JSONObject jsonObject = new JSONObject(body);
-                    try{
+                    try {
                         user = jsonObject.getInt("loginedUserId");
-                    }catch (JSONException exception) {
+                    } catch (JSONException exception) {
                         user = 0;
                     }
                     Map<String, Object> jsonMap = jsonObject.toMap();

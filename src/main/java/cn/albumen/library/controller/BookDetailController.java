@@ -34,74 +34,72 @@ public class BookDetailController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
-    @ControllerLog(description = "AddBookDetail",level = LevelConst.CRITICAL)
-    @RequestMapping(path = "/add",method = RequestMethod.POST)
+    @ControllerLog(description = "AddBookDetail", level = LevelConst.CRITICAL)
+    @RequestMapping(path = "/add", method = RequestMethod.POST)
     public PageCodeDto add(@RequestBody BookDetail bookDetail) {
         return PageCodeUtil.add(bookDetailService.add(bookDetail));
     }
 
-    @ControllerLog(description = "UpdateBookDetail",level = LevelConst.CRITICAL)
-    @RequestMapping(path = "/update",method = RequestMethod.POST)
+    @ControllerLog(description = "UpdateBookDetail", level = LevelConst.CRITICAL)
+    @RequestMapping(path = "/update", method = RequestMethod.POST)
     public PageCodeDto update(@RequestBody BookDetail bookDetail) {
         return PageCodeUtil.update(bookDetailService.update(bookDetail));
     }
 
-    @ControllerLog(description = "DeleteBookDetail",level = LevelConst.CRITICAL)
-    @RequestMapping(path = "/delete",method = RequestMethod.GET)
+    @ControllerLog(description = "DeleteBookDetail", level = LevelConst.CRITICAL)
+    @RequestMapping(path = "/delete", method = RequestMethod.GET)
     public PageCodeDto delete(BookDetail bookDetail) {
         return PageCodeUtil.delete(bookDetailService.delete(bookDetail));
     }
 
-    @ControllerLog(description = "RentBook",level = LevelConst.CRITICAL)
-    @RequestMapping(path = "/rent",method = RequestMethod.GET)
+    @ControllerLog(description = "RentBook", level = LevelConst.CRITICAL)
+    @RequestMapping(path = "/rent", method = RequestMethod.GET)
     public PageCodeDto rent(BookDetail bookDetail) {
         boolean flag = bookDetailService.updateRentBook(bookDetail);
-        if(flag) {
+        if (flag) {
             return new PageCodeDto(PageCodeEnum.RENT_SUCCESS);
-        }
-        else {
+        } else {
             return new PageCodeDto(PageCodeEnum.RENT_FAILED);
         }
     }
 
-    @ControllerLog(description = "BackBook",level = LevelConst.CRITICAL)
-    @RequestMapping(path = "/back",method = RequestMethod.GET)
+    @ControllerLog(description = "BackBook", level = LevelConst.CRITICAL)
+    @RequestMapping(path = "/back", method = RequestMethod.GET)
     public PageCodeDto back(BookDetail bookDetail) {
         boolean flag = bookDetailService.updateBackBook(bookDetail);
-        if(flag) {
+        if (flag) {
             return new PageCodeDto(PageCodeEnum.BACK_SUCCESS);
-        }
-        else {
+        } else {
             return new PageCodeDto(PageCodeEnum.BACK_FAILED);
         }
     }
 
-    @ControllerLog(description = "SelectBookDetail",level = LevelConst.INFO)
-    @RequestMapping(path = "/selectbyid",method = RequestMethod.GET)
+    @ControllerLog(description = "SelectBookDetail", level = LevelConst.INFO)
+    @RequestMapping(path = "/selectbyid", method = RequestMethod.GET)
     public PageCodeDto selectById(BookDetail bookDetail) {
         return PageCodeUtil.get(bookDetailService.selectById(bookDetail));
     }
 
-    @ControllerLog(description = "SelectBookDetail",level = LevelConst.INFO)
-    @RequestMapping(path = "/selectrent",method = RequestMethod.GET)
+    @ControllerLog(description = "SelectBookDetail", level = LevelConst.INFO)
+    @RequestMapping(path = "/selectrent", method = RequestMethod.GET)
     public PageCodeDto selectRent(BookDetail bookDetail) {
         return PageCodeUtil.get(bookDetailService.selectRent(bookDetail));
     }
 
-    @ControllerLog(description = "SelectBookDetail",level = LevelConst.INFO)
-    @RequestMapping(path = "/selectunrent",method = RequestMethod.GET)
+    @ControllerLog(description = "SelectBookDetail", level = LevelConst.INFO)
+    @RequestMapping(path = "/selectunrent", method = RequestMethod.GET)
     public PageCodeDto selectUnRent(BookDetail bookDetail) {
         return PageCodeUtil.get(bookDetailService.selectUnRent(bookDetail));
     }
 
-    @ControllerLog(description = "SelectBookDetail",level = LevelConst.INFO)
-    @RequestMapping(path = "/selectlike",method = RequestMethod.GET)
+    @ControllerLog(description = "SelectBookDetail", level = LevelConst.INFO)
+    @RequestMapping(path = "/selectlike", method = RequestMethod.GET)
     public PageCodeDto selectLike(BookSearchDto bookSearchDto) {
         return PageCodeUtil.get(bookDetailService.selectLike(bookSearchDto));
     }
 
-    @ControllerLog(description = "SelectBookDetail",level = LevelConst.INFO)
-    @RequestMapping(path = "/selectall",method = RequestMethod.GET)
+    @ControllerLog(description = "SelectBookDetail", level = LevelConst.INFO)
+    @RequestMapping(path = "/selectall", method = RequestMethod.GET)
     public PageCodeDto selectAll(BookDetail bookDetail) {
         return PageCodeUtil.get(bookDetailService.selectAll(bookDetail));
     }

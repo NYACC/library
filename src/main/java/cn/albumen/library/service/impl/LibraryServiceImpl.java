@@ -42,7 +42,7 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public List<LibraryDto> selectByCurator(Library library) {
         List<LibraryDto> libraryDtoList = libraryDao.selectByCurator(library);
-        if(libraryDtoList.isEmpty()) {
+        if (libraryDtoList.isEmpty()) {
             return null;
         }
         return libraryDtoList;
@@ -58,7 +58,7 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public List<LibraryDto> selectLimit(Library library) {
         List<LibraryDto> libraryDtoList = libraryDao.selectLimit(library);
-        if(libraryDtoList.isEmpty()) {
+        if (libraryDtoList.isEmpty()) {
             return null;
         }
         return libraryDtoList;
@@ -87,11 +87,10 @@ public class LibraryServiceImpl implements LibraryService {
     public boolean add(Library library) {
         boolean permissionAdministrator = userSecurityService.checkIdAdministrator(library.getLoginedUserId());
         boolean permissionCurator = userSecurityService.checkIdCurator(library.getCuratorId());
-        if(permissionAdministrator && permissionCurator) {
+        if (permissionAdministrator && permissionCurator) {
             int row = libraryDao.add(library);
             return (row == 1);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -105,11 +104,10 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public boolean delete(Library library) {
         boolean permission = userSecurityService.checkIdAdministrator(library.getLoginedUserId());
-        if(permission) {
+        if (permission) {
             int row = libraryDao.delete(library);
             return (row == 1);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -124,11 +122,10 @@ public class LibraryServiceImpl implements LibraryService {
     public boolean update(Library library) {
         boolean permissionAdministrator = userSecurityService.checkIdAdministrator(library.getLoginedUserId());
         boolean permissionCurator = userSecurityService.checkIdCurator(library.getCuratorId());
-        if(permissionAdministrator && permissionCurator) {
+        if (permissionAdministrator && permissionCurator) {
             int row = libraryDao.update(library);
             return (row == 1);
-        }
-        else {
+        } else {
             return false;
         }
     }

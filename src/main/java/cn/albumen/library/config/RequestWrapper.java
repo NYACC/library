@@ -1,4 +1,4 @@
-package cn.albumen.library.spring;
+package cn.albumen.library.config;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -7,10 +7,13 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 
 /**
+ * 修复OutputSteam只能读取一次
+ *
  * @author Albumen
  */
 public class RequestWrapper extends HttpServletRequestWrapper {
     private final String body;
+
     public RequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
         StringBuilder stringBuilder = new StringBuilder();
@@ -49,12 +52,16 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             public boolean isFinished() {
                 return false;
             }
+
             @Override
             public boolean isReady() {
                 return false;
             }
+
             @Override
-            public void setReadListener(ReadListener readListener) {}
+            public void setReadListener(ReadListener readListener) {
+            }
+
             @Override
             public int read() throws IOException {
                 return byteArrayInputStream.read();
@@ -63,10 +70,12 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         return servletInputStream;
 
     }
+
     @Override
     public BufferedReader getReader() throws IOException {
         return new BufferedReader(new InputStreamReader(this.getInputStream()));
     }
+
     public String getBody() {
         return this.body;
     }

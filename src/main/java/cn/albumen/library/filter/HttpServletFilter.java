@@ -1,12 +1,11 @@
-package cn.albumen.library.spring;
+package cn.albumen.library.filter;
 
+import cn.albumen.library.config.RequestWrapper;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -19,21 +18,13 @@ public class HttpServletFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         ServletRequest requestWrapper = null;
-        if(servletRequest instanceof HttpServletRequest) {
+        if (servletRequest instanceof HttpServletRequest) {
             requestWrapper = new RequestWrapper((HttpServletRequest) servletRequest);
         }
-        if(requestWrapper == null) {
+        if (requestWrapper == null) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             filterChain.doFilter(requestWrapper, servletResponse);
         }
-    }
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
-
-    @Override
-    public void destroy() {
     }
 }

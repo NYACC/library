@@ -28,11 +28,10 @@ public class BookCategoryServiceImpl implements BookCategoryService {
     @Override
     public boolean add(BookCategory bookCategory) {
         boolean flag = userSecurityService.checkIdCategoryStaff(bookCategory.getLoginedUserId());
-        if(flag) {
+        if (flag) {
             int row = bookCategoryDao.add(bookCategory);
             return (row == 1);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -46,11 +45,10 @@ public class BookCategoryServiceImpl implements BookCategoryService {
     @Override
     public boolean delete(BookCategory bookCategory) {
         boolean flag = userSecurityService.checkIdCategoryStaff(bookCategory.getLoginedUserId());
-        if(flag) {
+        if (flag) {
             int row = bookCategoryDao.delete(bookCategory);
             return (row == 1);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -64,11 +62,10 @@ public class BookCategoryServiceImpl implements BookCategoryService {
     @Override
     public boolean update(BookCategory bookCategory) {
         boolean flag = userSecurityService.checkIdCategoryStaff(bookCategory.getLoginedUserId());
-        if(flag) {
+        if (flag) {
             int row = bookCategoryDao.update(bookCategory);
             return (row == 1);
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -82,10 +79,9 @@ public class BookCategoryServiceImpl implements BookCategoryService {
     @Override
     public List<BookCategory> selectAll(BookCategory bookCategory) {
         List<BookCategory> list = bookCategoryDao.selectAll();
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return null;
-        }
-        else {
+        } else {
             return list;
         }
     }
@@ -99,10 +95,9 @@ public class BookCategoryServiceImpl implements BookCategoryService {
     @Override
     public List<BookCategory> selectLimit(BookCategory bookCategory) {
         List<BookCategory> list = bookCategoryDao.selectLimit(bookCategory);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return null;
-        }
-        else {
+        } else {
             return list;
         }
     }

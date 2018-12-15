@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import java.beans.PropertyVetoException;
 
 /**
+ * C3P0 配置文件
+ *
  * @author Albumen
  */
 @Configuration

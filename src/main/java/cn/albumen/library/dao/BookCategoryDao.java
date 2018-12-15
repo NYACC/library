@@ -2,7 +2,6 @@ package cn.albumen.library.dao;
 
 import cn.albumen.library.bean.BookCategory;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 

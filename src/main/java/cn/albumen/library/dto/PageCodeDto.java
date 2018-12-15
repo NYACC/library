@@ -12,14 +12,15 @@ public class PageCodeDto {
     private String msg;
     private Object object;
 
-    public PageCodeDto() { }
+    public PageCodeDto() {
+    }
 
     public PageCodeDto(PageCodeEnum pageCodeEnum) {
         this.code = pageCodeEnum.getCode();
         this.msg = pageCodeEnum.getMsg();
     }
 
-    public PageCodeDto(PageCodeEnum pageCodeEnum,Object object) {
+    public PageCodeDto(PageCodeEnum pageCodeEnum, Object object) {
         this.code = pageCodeEnum.getCode();
         this.msg = pageCodeEnum.getMsg();
         this.object = object;

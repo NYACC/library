@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @author Albumen
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserSecurity extends BaseBean{
+public class UserSecurity extends BaseBean {
     private Integer id;
     private String userNo;
     private String phone;

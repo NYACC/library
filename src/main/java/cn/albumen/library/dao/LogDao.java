@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface LogDao {
     /**
      * 添加日志
+     *
      * @param log
      * @return
      */

@@ -1,22 +1,16 @@
 package cn.albumen.library.config;
 
-import cn.albumen.library.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import redis.clients.jedis.JedisPoolConfig;
 
-import java.time.Duration;
-
 /**
+ * Jedis 连接池配置
+ *
  * @author Albumen
  */
 @Configuration
@@ -38,7 +32,7 @@ public class RedisConfiguration {
     RedisConnectionFactory redisConnectionFactory;
 
     @Bean
-    public JedisPoolConfig jedisPoolConfig(){
+    public JedisPoolConfig jedisPoolConfig() {
         JedisPoolConfig poolConfig = new JedisPoolConfig();
         poolConfig.setMaxIdle(Integer.parseInt(maxIdle));
         poolConfig.setMaxWaitMillis(Integer.parseInt(maxWaitMillis));
@@ -49,7 +43,7 @@ public class RedisConfiguration {
     }
 
     @Bean
-    public StringRedisTemplate redisTemplate(){
+    public StringRedisTemplate redisTemplate() {
         StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
         stringRedisTemplate.setConnectionFactory(redisConnectionFactory);
         return stringRedisTemplate;

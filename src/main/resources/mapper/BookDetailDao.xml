@@ -94,7 +94,7 @@
                 LEFT JOIN book_category
                           ON book_category.id = book_detail.category_id
         WHERE
-            book_detail.rent = '${@cn.albumenj.constant.RentConst@RENTED}'
+            book_detail.rent = '${@cn.albumen.library.constant.RentConst@RENTED}'
 
         <if test="start != null and count != null">
             limit #{start},#{count}
@@ -118,7 +118,7 @@
                 LEFT JOIN book_category
                           ON book_category.id = book_detail.category_id
         WHERE
-            book_detail.rent = '${@cn.albumenj.constant.RentConst@UNRENT}'
+            book_detail.rent = '${@cn.albumen.library.constant.RentConst@UNRENT}'
 
         <if test="start != null and count != null">
             limit #{start},#{count}

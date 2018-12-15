@@ -10,6 +10,7 @@ import java.util.List;
 public interface UserSecurityService {
     /**
      * 验证登陆
+     *
      * @param userSecurity
      * @return 返回查询结果
      */
@@ -17,6 +18,7 @@ public interface UserSecurityService {
 
     /**
      * 登出
+     *
      * @param userSecurity
      * @return 返回查询结果
      */
@@ -24,6 +26,7 @@ public interface UserSecurityService {
 
     /**
      * 添加安全组用户
+     *
      * @param userSecurity
      * @return
      */
@@ -31,6 +34,7 @@ public interface UserSecurityService {
 
     /**
      * 修改安全组用户
+     *
      * @param userSecurity
      * @return
      */
@@ -38,6 +42,7 @@ public interface UserSecurityService {
 
     /**
      * 有限制性枚举
+     *
      * @param userSecurity 鉴定权限
      * @return
      */
@@ -45,6 +50,7 @@ public interface UserSecurityService {
 
     /**
      * 计算用户量
+     *
      * @param userSecurity 鉴定权限
      * @return
      */
@@ -52,6 +58,7 @@ public interface UserSecurityService {
 
     /**
      * 删除用户
+     *
      * @param userSecurity
      * @return
      */
@@ -60,7 +67,7 @@ public interface UserSecurityService {
     /**
      * 防止越权
      *
-     * @param login 已登录用户
+     * @param login    已登录用户
      * @param operated 被操作用户
      * @return
      */

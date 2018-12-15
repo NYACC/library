@@ -7,12 +7,14 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 /**
+ * 解析器配置
+ *
  * @author Albumen
  */
 @Configuration
 public class ResolverConfiguration {
     @Bean
-    public InternalResourceViewResolver viewResolver(){
+    public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
         internalResourceViewResolver.setViewClass(JstlView.class);
         internalResourceViewResolver.setPrefix("/WEB-INF/jsp");
@@ -20,11 +22,11 @@ public class ResolverConfiguration {
         return internalResourceViewResolver;
     }
 
-    /*@Bean
-    public CommonsMultipartResolver multipartResolver(){
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
         commonsMultipartResolver.setMaxUploadSize(20000000);
         commonsMultipartResolver.setDefaultEncoding("UTF-8");
         return commonsMultipartResolver;
-    }*/
+    }
 }

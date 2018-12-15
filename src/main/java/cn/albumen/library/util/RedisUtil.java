@@ -18,6 +18,7 @@ public class RedisUtil {
 
     /**
      * String类型缓存获取
+     *
      * @param key 键
      * @return 值
      */
@@ -27,7 +28,8 @@ public class RedisUtil {
 
     /**
      * String类型缓存保存
-     * @param key 键
+     *
+     * @param key   键
      * @param value 值
      * @return true：成功；false：失败
      */
@@ -42,6 +44,7 @@ public class RedisUtil {
 
     /**
      * 删除键值
+     *
      * @param key
      * @return
      */

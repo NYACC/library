@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @author Albumen
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserDetail extends BaseBean{
+public class UserDetail extends BaseBean {
     private Integer id;
     private Integer userId;
     private Integer sex;

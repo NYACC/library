@@ -32,21 +32,20 @@ public class BookDetailServiceImpl implements BookDetailService {
     @Override
     public boolean add(BookDetail bookDetail) {
         boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId());
-        if(permission) {
+        if (permission) {
             bookDetail.setRent(RentConst.UNRENT);
             boolean flag = true;
-            if(bookDetail.getBookNum().equals(0)) {
+            if (bookDetail.getBookNum().equals(0)) {
                 return false;
             }
-            for(int i = 0;i<bookDetail.getBookNum();i++){
-                boolean insert = (bookDetailDao.add(bookDetail)!=1);
-                if(insert) {
+            for (int i = 0; i < bookDetail.getBookNum(); i++) {
+                boolean insert = (bookDetailDao.add(bookDetail) != 1);
+                if (insert) {
                     flag = false;
                 }
             }
             return flag;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -60,11 +59,10 @@ public class BookDetailServiceImpl implements BookDetailService {
     @Override
     public boolean delete(BookDetail bookDetail) {
         boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId());
-        if(permission) {
-            boolean flag = (bookDetailDao.delete(bookDetail)==1);
+        if (permission) {
+            boolean flag = (bookDetailDao.delete(bookDetail) == 1);
             return flag;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -78,11 +76,10 @@ public class BookDetailServiceImpl implements BookDetailService {
     @Override
     public boolean update(BookDetail bookDetail) {
         boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId());
-        if(permission) {
-            boolean flag = (bookDetailDao.update(bookDetail)==1);
+        if (permission) {
+            boolean flag = (bookDetailDao.update(bookDetail) == 1);
             return flag;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -96,8 +93,8 @@ public class BookDetailServiceImpl implements BookDetailService {
     @Override
     public boolean updateRentBook(BookDetail bookDetail) {
         boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId())
-                                || bookDetail.getLoginedUserId().equals(bookDetail.getRentUserId());
-        if(permission) {
+                || bookDetail.getLoginedUserId().equals(bookDetail.getRentUserId());
+        if (permission) {
             BookDetail bookDetailTmp = bookDetailDao.selectById(bookDetail);
             if (bookDetailTmp.getRent().equals(RentConst.UNRENT)) {
                 boolean rentable = (bookDetail.getRentUserId() != null);
@@ -121,8 +118,7 @@ public class BookDetailServiceImpl implements BookDetailService {
             } else {
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -137,7 +133,7 @@ public class BookDetailServiceImpl implements BookDetailService {
     public boolean updateBackBook(BookDetail bookDetail) {
         boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId())
                 || bookDetail.getLoginedUserId().equals(bookDetail.getRentUserId());
-        if(permission) {
+        if (permission) {
             BookDetail bookDetailTmp = bookDetailDao.selectById(bookDetail);
             if (bookDetailTmp.getRent().equals(RentConst.RENTED)) {
                 BookDetail bookDetailUpdate = new BookDetail();
@@ -146,12 +142,10 @@ public class BookDetailServiceImpl implements BookDetailService {
 
                 int row = bookDetailDao.back(bookDetailUpdate);
                 return (row == 1);
-            }
-            else {
+            } else {
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -176,10 +170,9 @@ public class BookDetailServiceImpl implements BookDetailService {
     @Override
     public List<BookDetail> selectRent(BookDetail bookDetail) {
         List<BookDetail> list = bookDetailDao.selectRent(bookDetail);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return null;
-        }
-        else {
+        } else {
             return list;
         }
     }
@@ -193,10 +186,9 @@ public class BookDetailServiceImpl implements BookDetailService {
     @Override
     public List<BookDetail> selectUnRent(BookDetail bookDetail) {
         List<BookDetail> list = bookDetailDao.selectUnRent(bookDetail);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return null;
-        }
-        else {
+        } else {
             return list;
         }
     }
@@ -211,10 +203,9 @@ public class BookDetailServiceImpl implements BookDetailService {
     @Override
     public List<BookDetail> selectLike(BookSearchDto bookSearchDto) {
         List<BookDetail> list = bookDetailDao.selectLike(bookSearchDto);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return null;
-        }
-        else {
+        } else {
             return list;
         }
     }
@@ -228,10 +219,9 @@ public class BookDetailServiceImpl implements BookDetailService {
     @Override
     public List<BookDetail> selectAll(BookDetail bookDetail) {
         List<BookDetail> list = bookDetailDao.selectAll(bookDetail);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return null;
-        }
-        else {
+        } else {
             return list;
         }
     }

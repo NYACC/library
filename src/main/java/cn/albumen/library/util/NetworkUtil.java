@@ -40,7 +40,7 @@ public final class NetworkUtil {
         } else if (ip.length() > ipLength) {
             String[] ips = ip.split(",");
             for (int index = 0; index < ips.length; index++) {
-                String strIp = (String) ips[index];
+                String strIp = ips[index];
                 if (!(unknown.equalsIgnoreCase(strIp))) {
                     ip = strIp;
                     break;

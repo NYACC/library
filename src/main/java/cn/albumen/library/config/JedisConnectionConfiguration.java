@@ -10,6 +10,8 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import java.time.Duration;
 
 /**
+ * Jedis连接配置
+ *
  * @author Albumen
  */
 @Configuration
@@ -22,7 +24,7 @@ public class JedisConnectionConfiguration {
     String timeout;
 
     @Bean
-    public JedisConnectionFactory jedisConnectionFactory(){
+    public JedisConnectionFactory jedisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(ip);
         redisStandaloneConfiguration.setPort(Integer.parseInt(port));
@@ -30,7 +32,7 @@ public class JedisConnectionConfiguration {
         JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfigurationBuilder = JedisClientConfiguration.builder();
         jedisClientConfigurationBuilder.connectTimeout(Duration.ofMillis(Integer.parseInt(timeout)));
 
-        JedisConnectionFactory connectionFactory =  new JedisConnectionFactory(redisStandaloneConfiguration,jedisClientConfigurationBuilder.build());
+        JedisConnectionFactory connectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration, jedisClientConfigurationBuilder.build());
         return connectionFactory;
     }
 }
