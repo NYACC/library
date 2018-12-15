@@ -56,7 +56,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
      */
     @Override
     public boolean logout(UserSecurity userSecurity) {
-        boolean ret = redisUtil.delete(userSecurity.getLoginedUserId().toString());
+        boolean ret = redisUtil.delete(userSecurity.getLoginUserId().toString());
         return ret;
     }
 
@@ -69,7 +69,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
     @Override
     public boolean addUser(UserSecurity userSecurity) {
 
-        boolean flag = checkPermission(getPermission(userSecurity.getLoginedUserId()),
+        boolean flag = checkPermission(getPermission(userSecurity.getLoginUserId()),
                 userSecurity.getPermission());
 
         if (flag) {
@@ -100,7 +100,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
     @Override
     public boolean updateUser(UserSecurity userSecurity) {
 
-        boolean flag = checkPermission(getPermission(userSecurity.getLoginedUserId()),
+        boolean flag = checkPermission(getPermission(userSecurity.getLoginUserId()),
                 userSecurity.getPermission());
 
         if (flag) {
@@ -219,7 +219,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
      */
     @Override
     public List<UserSecurity> selectList(UserSecurity userSecurity) {
-        userSecurity.setId(userSecurity.getLoginedUserId());
+        userSecurity.setId(userSecurity.getLoginUserId());
         UserSecurity userSecurityTmp = userSecurityDao.selectById(userSecurity);
         if (userSecurity == null) {
             return null;
@@ -244,7 +244,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
      */
     @Override
     public int selectCount(UserSecurity userSecurity) {
-        userSecurity.setId(userSecurity.getLoginedUserId());
+        userSecurity.setId(userSecurity.getLoginUserId());
         UserSecurity userSecurityTmp = userSecurityDao.selectById(userSecurity);
         if (userSecurityTmp == null) {
             return 0;
@@ -261,7 +261,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
     @Override
     public boolean delete(UserSecurity userSecurity) {
         UserSecurity userSecurityLogin = new UserSecurity();
-        userSecurityLogin.setId(userSecurity.getLoginedUserId());
+        userSecurityLogin.setId(userSecurity.getLoginUserId());
         userSecurityLogin = userSecurityDao.selectById(userSecurityLogin);
         UserSecurity userSecurityOperated = new UserSecurity();
         userSecurityOperated.setId(userSecurity.getId());
@@ -272,9 +272,9 @@ public class UserSecurityServiceImpl implements UserSecurityService {
             if (checkPermission(userSecurityLogin.getPermission(), userSecurityOperated.getPermission())) {
                 UserDetail userDetail = new UserDetail();
                 userDetail.setUserId(userSecurity.getId());
-                userDetail.setLoginedUserId(userSecurity.getLoginedUserId());
+                userDetail.setLoginUserId(userSecurity.getLoginUserId());
                 userDetail = userDetailService.selectById(userDetail);
-                userDetail.setLoginedUserId(userSecurity.getLoginedUserId());
+                userDetail.setLoginUserId(userSecurity.getLoginUserId());
                 boolean flag = userDetailService.delete(userDetail);
                 int row = userSecurityDao.delete(userSecurity);
                 return (row == 1) && flag;

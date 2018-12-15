@@ -17,10 +17,10 @@ public class ServletUtil {
         String id = null;
         if (!body.isEmpty()) {
             JSONObject jsonObject = new JSONObject(body);
-            Integer bodyId = jsonObject.getInt("loginedUserId");
+            Integer bodyId = jsonObject.getInt("loginUserId");
             id = bodyId.toString();
         } else {
-            id = request.getParameter("loginedUserId");
+            id = request.getParameter("loginUserId");
         }
         return id;
     }

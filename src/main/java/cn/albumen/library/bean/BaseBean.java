@@ -5,7 +5,7 @@ package cn.albumen.library.bean;
  */
 public class BaseBean {
     private String token;
-    private Integer loginedUserId;
+    private Integer loginUserId;
     private Integer start;
     private Integer count;
     private Integer itemNum;
@@ -18,12 +18,12 @@ public class BaseBean {
         this.token = token;
     }
 
-    public Integer getLoginedUserId() {
-        return loginedUserId;
+    public Integer getLoginUserId() {
+        return loginUserId;
     }
 
-    public void setLoginedUserId(Integer loginedUserId) {
-        this.loginedUserId = loginedUserId;
+    public void setLoginUserId(Integer loginUserId) {
+        this.loginUserId = loginUserId;
     }
 
     public Integer getStart() {

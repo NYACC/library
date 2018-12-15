@@ -27,7 +27,7 @@ public class BookCategoryServiceImpl implements BookCategoryService {
      */
     @Override
     public boolean add(BookCategory bookCategory) {
-        boolean flag = userSecurityService.checkIdCategoryStaff(bookCategory.getLoginedUserId());
+        boolean flag = userSecurityService.checkIdCategoryStaff(bookCategory.getLoginUserId());
         if (flag) {
             int row = bookCategoryDao.add(bookCategory);
             return (row == 1);
@@ -44,7 +44,7 @@ public class BookCategoryServiceImpl implements BookCategoryService {
      */
     @Override
     public boolean delete(BookCategory bookCategory) {
-        boolean flag = userSecurityService.checkIdCategoryStaff(bookCategory.getLoginedUserId());
+        boolean flag = userSecurityService.checkIdCategoryStaff(bookCategory.getLoginUserId());
         if (flag) {
             int row = bookCategoryDao.delete(bookCategory);
             return (row == 1);
@@ -61,7 +61,7 @@ public class BookCategoryServiceImpl implements BookCategoryService {
      */
     @Override
     public boolean update(BookCategory bookCategory) {
-        boolean flag = userSecurityService.checkIdCategoryStaff(bookCategory.getLoginedUserId());
+        boolean flag = userSecurityService.checkIdCategoryStaff(bookCategory.getLoginUserId());
         if (flag) {
             int row = bookCategoryDao.update(bookCategory);
             return (row == 1);

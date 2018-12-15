@@ -11,7 +11,7 @@
     <select id="selectByPermission" resultType="UserDetail">
         select c.id,c.user_id,c.sex,c.name,c.location
         from user_detail c,user_security s
-        where c.user_id=s.id and s.permission>=(select permission from user_security where id = #{loginedUserId})
+        where c.user_id=s.id and s.permission>=(select permission from user_security where id = #{loginUserId})
         <if test="start != null and count != null">
             limit #{start},#{count}
         </if>

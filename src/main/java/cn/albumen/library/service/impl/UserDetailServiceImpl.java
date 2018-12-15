@@ -50,7 +50,7 @@ public class UserDetailServiceImpl implements UserDetailService {
         if (userDetailTmp == null || (!userDetail.getId().equals(userDetailTmp.getId()))) {
             return false;
         }
-        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginedUserId(), userDetail.getUserId());
+        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginUserId(), userDetail.getUserId());
         if (flag) {
             int row = userDetailDao.update(userDetail);
             return (row == 1);
@@ -67,7 +67,7 @@ public class UserDetailServiceImpl implements UserDetailService {
      */
     @Override
     public boolean delete(UserDetail userDetail) {
-        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginedUserId(), userDetail.getUserId());
+        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginUserId(), userDetail.getUserId());
         if (flag) {
             userDetail = userDetailDao.select(userDetail);
             int row = userDetailDao.delete(userDetail);
@@ -101,7 +101,7 @@ public class UserDetailServiceImpl implements UserDetailService {
      */
     @Override
     public UserDetail selectById(UserDetail userDetail) {
-        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginedUserId(), userDetail.getUserId());
+        boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginUserId(), userDetail.getUserId());
         if (flag) {
             return userDetailDao.select(userDetail);
         } else {

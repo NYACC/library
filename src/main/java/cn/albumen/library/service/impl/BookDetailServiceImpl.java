@@ -31,7 +31,7 @@ public class BookDetailServiceImpl implements BookDetailService {
      */
     @Override
     public boolean add(BookDetail bookDetail) {
-        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId());
+        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginUserId());
         if (permission) {
             bookDetail.setRent(RentConst.UNRENT);
             boolean flag = true;
@@ -58,7 +58,7 @@ public class BookDetailServiceImpl implements BookDetailService {
      */
     @Override
     public boolean delete(BookDetail bookDetail) {
-        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId());
+        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginUserId());
         if (permission) {
             boolean flag = (bookDetailDao.delete(bookDetail) == 1);
             return flag;
@@ -75,7 +75,7 @@ public class BookDetailServiceImpl implements BookDetailService {
      */
     @Override
     public boolean update(BookDetail bookDetail) {
-        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId());
+        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginUserId());
         if (permission) {
             boolean flag = (bookDetailDao.update(bookDetail) == 1);
             return flag;
@@ -92,8 +92,8 @@ public class BookDetailServiceImpl implements BookDetailService {
      */
     @Override
     public boolean updateRentBook(BookDetail bookDetail) {
-        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId())
-                || bookDetail.getLoginedUserId().equals(bookDetail.getRentUserId());
+        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginUserId())
+                || bookDetail.getLoginUserId().equals(bookDetail.getRentUserId());
         if (permission) {
             BookDetail bookDetailTmp = bookDetailDao.selectById(bookDetail);
             if (bookDetailTmp.getRent().equals(RentConst.UNRENT)) {
@@ -131,8 +131,8 @@ public class BookDetailServiceImpl implements BookDetailService {
      */
     @Override
     public boolean updateBackBook(BookDetail bookDetail) {
-        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginedUserId())
-                || bookDetail.getLoginedUserId().equals(bookDetail.getRentUserId());
+        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginUserId())
+                || bookDetail.getLoginUserId().equals(bookDetail.getRentUserId());
         if (permission) {
             BookDetail bookDetailTmp = bookDetailDao.selectById(bookDetail);
             if (bookDetailTmp.getRent().equals(RentConst.RENTED)) {

@@ -61,7 +61,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
                     String body = myRequestWrapper.getBody();
                     JSONObject jsonObject = new JSONObject(body);
                     try {
-                        user = jsonObject.getInt("loginedUserId");
+                        user = jsonObject.getInt("loginUserId");
                     } catch (JSONException exception) {
                         user = 0;
                     }
@@ -75,7 +75,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
                     /**
                      * GET
                      */
-                    user = Integer.valueOf(request.getParameter("loginedUserId"));
+                    user = Integer.valueOf(request.getParameter("loginUserId"));
                     Map<String, String[]> parameterMap = request.getParameterMap();
                     for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
                         stringBuilder.append("\"" + entry.getKey() + "\": ");

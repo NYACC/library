@@ -85,7 +85,7 @@ public class LibraryServiceImpl implements LibraryService {
      */
     @Override
     public boolean add(Library library) {
-        boolean permissionAdministrator = userSecurityService.checkIdAdministrator(library.getLoginedUserId());
+        boolean permissionAdministrator = userSecurityService.checkIdAdministrator(library.getLoginUserId());
         boolean permissionCurator = userSecurityService.checkIdCurator(library.getCuratorId());
         if (permissionAdministrator && permissionCurator) {
             int row = libraryDao.add(library);
@@ -103,7 +103,7 @@ public class LibraryServiceImpl implements LibraryService {
      */
     @Override
     public boolean delete(Library library) {
-        boolean permission = userSecurityService.checkIdAdministrator(library.getLoginedUserId());
+        boolean permission = userSecurityService.checkIdAdministrator(library.getLoginUserId());
         if (permission) {
             int row = libraryDao.delete(library);
             return (row == 1);
@@ -120,7 +120,7 @@ public class LibraryServiceImpl implements LibraryService {
      */
     @Override
     public boolean update(Library library) {
-        boolean permissionAdministrator = userSecurityService.checkIdAdministrator(library.getLoginedUserId());
+        boolean permissionAdministrator = userSecurityService.checkIdAdministrator(library.getLoginUserId());
         boolean permissionCurator = userSecurityService.checkIdCurator(library.getCuratorId());
         if (permissionAdministrator && permissionCurator) {
             int row = libraryDao.update(library);

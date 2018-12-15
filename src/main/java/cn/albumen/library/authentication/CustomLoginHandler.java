@@ -1,8 +1,11 @@
 package cn.albumen.library.authentication;
 
+import cn.albumen.library.bean.Log;
 import cn.albumen.library.constant.HttpConst;
 import cn.albumen.library.constant.PageCodeEnum;
+import cn.albumen.library.dao.LogDao;
 import cn.albumen.library.util.Jwt;
+import cn.albumen.library.util.NetworkUtil;
 import cn.albumen.library.util.PageCodeUtil;
 import cn.albumen.library.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ import java.io.IOException;
 public class CustomLoginHandler implements AuthenticationSuccessHandler, AuthenticationFailureHandler {
     @Autowired
     RedisUtil redisUtil;
+    @Autowired
+    LogDao logDao;
 
     /**
      * Login Success
@@ -42,6 +47,11 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler, Authent
             // 登录成功后，返回token到header里面
             response.addHeader(HttpConst.AUTHORIZATION, HttpConst.AUTHORIZATION_PREFIX + token);
             PageCodeUtil.printCode(response, PageCodeEnum.LOGIN_SUCCESS);
+            Log log = new Log();
+            log.setUser(Integer.parseInt(authentication.getName()));
+            log.setIp(NetworkUtil.getIpAddress(request));
+            log.setContent("Action: Login Params: \"userNo\": \"" + authentication.getName() + "\" ");
+            logDao.insert(log);
         } catch (Exception e) {
             try {
                 PageCodeUtil.printCode(response, PageCodeEnum.SYSTEM_ERROR);
