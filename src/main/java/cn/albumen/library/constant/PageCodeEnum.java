@@ -64,11 +64,11 @@ public enum PageCodeEnum {
     /**
      * 登出成功
      */
-    LOGOUT_SUCCESS(1600, "登出成功"),
+    LOGOUT_SUCCESS(1700, "登出成功"),
     /**
      * 登出失败
      */
-    LOGOUT_FAILED(1601, "登出失败"),
+    LOGOUT_FAILED(1701, "登出失败"),
     /**
      * 认证失败
      */
