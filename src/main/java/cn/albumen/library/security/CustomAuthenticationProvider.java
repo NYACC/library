@@ -1,6 +1,7 @@
-package cn.albumen.library.authentication;
+package cn.albumen.library.security;
 
 import cn.albumen.library.bean.UserSecurity;
+import cn.albumen.library.constant.PermissionConst;
 import cn.albumen.library.service.UserSecurityService;
 import cn.albumen.library.service.impl.GrantedAuthorityImpl;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -39,8 +40,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         userSecurity = userSecurityService.login(userSecurity);
         if (null != userSecurity) {
             ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new GrantedAuthorityImpl(userSecurity.getPermission().toString()));
-            // 生成令牌 这里令牌里面存入了:name,password,authorities, 当然你也可以放其他内容
+            for (Integer i = userSecurity.getPermission(); i <= PermissionConst.PERMISSION.size(); i++) {
+                authorities.add(new GrantedAuthorityImpl(PermissionConst.PERMISSION.get(i)));
+            }
+
             Authentication auth = new UsernamePasswordAuthenticationToken(name, password, authorities);
             return auth;
         } else {

@@ -7,6 +7,7 @@ import cn.albumen.library.dto.PageCodeDto;
 import cn.albumen.library.service.BookCategoryService;
 import cn.albumen.library.util.PageCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,18 +24,21 @@ public class BookCategoryController {
 
     @ControllerLog(description = "AddBookCategory", level = LevelConst.CRITICAL)
     @RequestMapping(path = "/add", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('CATEGORY_STAFF')")
     public PageCodeDto add(@RequestBody BookCategory bookCategory) {
         return PageCodeUtil.add(bookCategoryService.add(bookCategory));
     }
 
     @ControllerLog(description = "DeleteBookCategory", level = LevelConst.CRITICAL)
     @RequestMapping(path = "/delete", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('CATEGORY_STAFF')")
     public PageCodeDto delete(BookCategory bookCategory) {
         return PageCodeUtil.delete(bookCategoryService.delete(bookCategory));
     }
 
     @ControllerLog(description = "UpdateBookCategory", level = LevelConst.CRITICAL)
     @RequestMapping(path = "/update", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('CATEGORY_STAFF')")
     public PageCodeDto update(@RequestBody BookCategory bookCategory) {
         return PageCodeUtil.update(bookCategoryService.update(bookCategory));
     }

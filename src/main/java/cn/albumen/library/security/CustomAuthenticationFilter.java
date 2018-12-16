@@ -1,13 +1,15 @@
-package cn.albumen.library.filter;
+package cn.albumen.library.security;
 
 import cn.albumen.library.constant.HttpConst;
 import cn.albumen.library.constant.PageCodeEnum;
+import cn.albumen.library.service.impl.GrantedAuthorityImpl;
 import cn.albumen.library.util.Jwt;
 import cn.albumen.library.util.PageCodeUtil;
 import cn.albumen.library.util.RedisUtil;
 import cn.albumen.library.util.ServletUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -39,10 +41,15 @@ public class CustomAuthenticationFilter extends BasicAuthenticationFilter {
             if (id != null && !id.isEmpty() && token != null && !token.isEmpty()) {
                 String tokenRedis = redisUtil.get(id);
                 if (tokenRedis != null && tokenRedis.compareTo(token.substring(HttpConst.AUTHORIZATION_PREFIX.length())) == 0) {
-                    boolean ret = Jwt.verify(token.substring(HttpConst.AUTHORIZATION_PREFIX.length()), id);
-                    if (ret) {
+                    String[] ret = Jwt.verifyWithPermission(token.substring(HttpConst.AUTHORIZATION_PREFIX.length()), id);
+                    if (ret != null) {
                         //验证成功
-                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(id, null, new ArrayList<>());
+                        ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+                        for (String permission : ret) {
+                            authorities.add(new GrantedAuthorityImpl(permission));
+                        }
+
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(id, null, authorities);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                         chain.doFilter(request, response);
                         return;

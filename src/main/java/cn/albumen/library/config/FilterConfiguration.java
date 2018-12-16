@@ -1,6 +1,5 @@
 package cn.albumen.library.config;
 
-import cn.albumen.library.filter.HttpServletFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

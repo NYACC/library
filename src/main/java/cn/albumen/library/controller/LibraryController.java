@@ -7,6 +7,7 @@ import cn.albumen.library.dto.PageCodeDto;
 import cn.albumen.library.service.LibraryService;
 import cn.albumen.library.util.PageCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,18 +24,21 @@ public class LibraryController {
 
     @ControllerLog(description = "AddLibrary", level = LevelConst.CRITICAL)
     @RequestMapping(path = "/add", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public PageCodeDto add(@RequestBody Library library) {
         return PageCodeUtil.add(libraryService.add(library));
     }
 
     @ControllerLog(description = "DeleteLibrary", level = LevelConst.CRITICAL)
     @RequestMapping(path = "/delete", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public PageCodeDto delete(Library library) {
         return PageCodeUtil.delete(libraryService.delete(library));
     }
 
     @ControllerLog(description = "UpdateLibrary", level = LevelConst.CRITICAL)
     @RequestMapping(path = "/update", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public PageCodeDto update(@RequestBody Library library) {
         return PageCodeUtil.update(libraryService.update(library));
     }

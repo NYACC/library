@@ -46,55 +46,58 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
             try {
                 HandlerMethod handlerMethod = (HandlerMethod) handler;
                 ControllerLog annotation = ((HandlerMethod) handler).getMethodAnnotation(ControllerLog.class);
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("Action: ");
-                stringBuilder.append(annotation.description());
+                if (annotation != null) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("Action: ");
+                    stringBuilder.append(annotation.description());
 
-                stringBuilder.append(" Params: ");
-                Integer user;
-                if (request.getMethod().compareToIgnoreCase(HttpConst.POST) == 0) {
-                    /**
-                     * POST
-                     */
-                    RequestWrapper myRequestWrapper = new RequestWrapper(request);
-                    String body = myRequestWrapper.getBody();
-                    JSONObject jsonObject = new JSONObject(body);
-                    try {
-                        user = jsonObject.getInt("loginUserId");
-                    } catch (JSONException exception) {
-                        user = 0;
-                    }
-                    Map<String, Object> jsonMap = jsonObject.toMap();
-                    for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
-                        stringBuilder.append("\"" + entry.getKey() + "\": ");
-                        stringBuilder.append("\"" + entry.getValue() + "\", ");
-                    }
-                    stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
-                } else {
-                    /**
-                     * GET
-                     */
-                    user = Integer.valueOf(request.getParameter("loginUserId"));
-                    Map<String, String[]> parameterMap = request.getParameterMap();
-                    for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-                        stringBuilder.append("\"" + entry.getKey() + "\": ");
-                        for (String value : entry.getValue()) {
-                            stringBuilder.append("\"" + value + "\", ");
+                    stringBuilder.append(" Params: ");
+                    Integer user;
+                    if (request.getMethod().compareToIgnoreCase(HttpConst.POST) == 0) {
+                        /**
+                         * POST
+                         */
+                        RequestWrapper myRequestWrapper = new RequestWrapper(request);
+                        String body = myRequestWrapper.getBody();
+                        JSONObject jsonObject = new JSONObject(body);
+                        try {
+                            user = jsonObject.getInt("loginUserId");
+                        } catch (JSONException exception) {
+                            user = 0;
                         }
-                        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
-                        stringBuilder.append("; ");
+                        Map<String, Object> jsonMap = jsonObject.toMap();
+                        for (Map.Entry<String, Object> entry : jsonMap.entrySet()) {
+                            stringBuilder.append("\"" + entry.getKey() + "\": ");
+                            stringBuilder.append("\"" + entry.getValue() + "\", ");
+                        }
+                        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
+                    } else {
+                        /**
+                         * GET
+                         */
+                        user = Integer.valueOf(request.getParameter("loginUserId"));
+                        Map<String, String[]> parameterMap = request.getParameterMap();
+                        for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+                            stringBuilder.append("\"" + entry.getKey() + "\": ");
+                            for (String value : entry.getValue()) {
+                                stringBuilder.append("\"" + value + "\", ");
+                            }
+                            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+                            stringBuilder.append("; ");
+                        }
+                        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
                     }
-                    stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
+                    Log log = new Log();
+                    log.setUser(user);
+                    log.setContent(stringBuilder.toString());
+                    log.setIp(NetworkUtil.getIpAddress(request));
+                    log.setLevel(annotation.level());
+                    logDao.insert(log);
                 }
-                Log log = new Log();
-                log.setUser(user);
-                log.setContent(stringBuilder.toString());
-                log.setIp(NetworkUtil.getIpAddress(request));
-                log.setLevel(annotation.level());
-                logDao.insert(log);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
     }
 

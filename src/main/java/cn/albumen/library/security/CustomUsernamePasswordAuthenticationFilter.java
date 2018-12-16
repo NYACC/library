@@ -1,4 +1,4 @@
-package cn.albumen.library.filter;
+package cn.albumen.library.security;
 
 import cn.albumen.library.config.RequestWrapper;
 import org.json.JSONObject;

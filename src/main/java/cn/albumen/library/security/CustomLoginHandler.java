@@ -1,4 +1,4 @@
-package cn.albumen.library.authentication;
+package cn.albumen.library.security;
 
 import cn.albumen.library.bean.Log;
 import cn.albumen.library.constant.HttpConst;
@@ -12,6 +12,7 @@ import cn.albumen.library.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Albumen
@@ -43,7 +46,14 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler, Authent
         // builder the token
         String token = null;
         try {
-            token = Jwt.create(authentication.getName());
+            List<String> authorities =
+                    authentication.getAuthorities()
+                            .stream()
+                            .map(e -> ((GrantedAuthority) e).getAuthority())
+                            .collect(Collectors.toList());
+            String[] permission = authorities.toArray(new String[authorities.size()]);
+
+            token = Jwt.create(authentication.getName(), permission);
             redisUtil.set(authentication.getName(), token);
             // 登录成功后，返回token到header里面
             response.addHeader(HttpConst.AUTHORIZATION, HttpConst.AUTHORIZATION_PREFIX + token);

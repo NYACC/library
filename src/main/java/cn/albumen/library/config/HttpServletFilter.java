@@ -1,6 +1,5 @@
-package cn.albumen.library.filter;
+package cn.albumen.library.config;
 
-import cn.albumen.library.config.RequestWrapper;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

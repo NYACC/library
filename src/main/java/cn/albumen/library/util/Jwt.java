@@ -34,6 +34,21 @@ public class Jwt {
         return token;
     }
 
+    public static String create(String userName, String[] permission) {
+        String token = null;
+        try {
+            token = JWT.create()
+                    .withIssuer("Albumen")
+                    .withSubject(userName)
+                    .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConfig.EXP_TIME))
+                    .withArrayClaim("Permission", permission)
+                    .sign(algorithmRS);
+        } catch (JWTCreationException exception) {
+            return null;
+        }
+        return token;
+    }
+
     public static boolean verify(String token, String userName) {
         try {
             JWTVerifier verifier = JWT.require(algorithmRS)
@@ -44,6 +59,20 @@ public class Jwt {
             return true;
         } catch (JWTVerificationException exception) {
             return false;
+            //Invalid signature/claims
+        }
+    }
+
+    public static String[] verifyWithPermission(String token, String userName) {
+        try {
+            JWTVerifier verifier = JWT.require(algorithmRS)
+                    .withIssuer("Albumen")
+                    .withSubject(userName)
+                    .build(); //Reusable verifier instance
+            DecodedJWT jwt = verifier.verify(token);
+            return jwt.getClaim("Permission").asArray(String.class);
+        } catch (JWTVerificationException exception) {
+            return null;
             //Invalid signature/claims
         }
     }

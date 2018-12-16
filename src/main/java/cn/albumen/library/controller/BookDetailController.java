@@ -10,6 +10,7 @@ import cn.albumen.library.service.BookDetailService;
 import cn.albumen.library.util.PageCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,18 +36,21 @@ public class BookDetailController {
     }
 
     @ControllerLog(description = "AddBookDetail", level = LevelConst.CRITICAL)
+    @PreAuthorize("hasAuthority('CATEGORY_STAFF')")
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     public PageCodeDto add(@RequestBody BookDetail bookDetail) {
         return PageCodeUtil.add(bookDetailService.add(bookDetail));
     }
 
     @ControllerLog(description = "UpdateBookDetail", level = LevelConst.CRITICAL)
+    @PreAuthorize("hasAuthority('CATEGORY_STAFF')")
     @RequestMapping(path = "/update", method = RequestMethod.POST)
     public PageCodeDto update(@RequestBody BookDetail bookDetail) {
         return PageCodeUtil.update(bookDetailService.update(bookDetail));
     }
 
     @ControllerLog(description = "DeleteBookDetail", level = LevelConst.CRITICAL)
+    @PreAuthorize("hasAuthority('CATEGORY_STAFF')")
     @RequestMapping(path = "/delete", method = RequestMethod.GET)
     public PageCodeDto delete(BookDetail bookDetail) {
         return PageCodeUtil.delete(bookDetailService.delete(bookDetail));

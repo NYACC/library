@@ -31,23 +31,18 @@ public class BookDetailServiceImpl implements BookDetailService {
      */
     @Override
     public boolean add(BookDetail bookDetail) {
-        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginUserId());
-        if (permission) {
-            bookDetail.setRent(RentConst.UNRENT);
-            boolean flag = true;
-            if (bookDetail.getBookNum().equals(0)) {
-                return false;
-            }
-            for (int i = 0; i < bookDetail.getBookNum(); i++) {
-                boolean insert = (bookDetailDao.add(bookDetail) != 1);
-                if (insert) {
-                    flag = false;
-                }
-            }
-            return flag;
-        } else {
+        bookDetail.setRent(RentConst.UNRENT);
+        boolean flag = true;
+        if (bookDetail.getBookNum().equals(0)) {
             return false;
         }
+        for (int i = 0; i < bookDetail.getBookNum(); i++) {
+            boolean insert = (bookDetailDao.add(bookDetail) != 1);
+            if (insert) {
+                flag = false;
+            }
+        }
+        return flag;
     }
 
     /**
@@ -58,13 +53,8 @@ public class BookDetailServiceImpl implements BookDetailService {
      */
     @Override
     public boolean delete(BookDetail bookDetail) {
-        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginUserId());
-        if (permission) {
-            boolean flag = (bookDetailDao.delete(bookDetail) == 1);
-            return flag;
-        } else {
-            return false;
-        }
+        boolean flag = (bookDetailDao.delete(bookDetail) == 1);
+        return flag;
     }
 
     /**
@@ -75,13 +65,8 @@ public class BookDetailServiceImpl implements BookDetailService {
      */
     @Override
     public boolean update(BookDetail bookDetail) {
-        boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginUserId());
-        if (permission) {
-            boolean flag = (bookDetailDao.update(bookDetail) == 1);
-            return flag;
-        } else {
-            return false;
-        }
+        boolean flag = (bookDetailDao.update(bookDetail) == 1);
+        return flag;
     }
 
     /**

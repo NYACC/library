@@ -74,9 +74,13 @@ public enum PageCodeEnum {
      */
     NOT_LOGIN(2000, "认证失败"),
     /**
+     * 权限不足
+     */
+    PERMISSION_DENIED(2001, "权限不足"),
+    /**
      * 系统错误
      */
-    SYSTEM_ERROR(2001, "系统错误"),
+    SYSTEM_ERROR(2002, "系统错误"),
     ;
 
     private Integer code;
