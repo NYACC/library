@@ -1,5 +1,6 @@
-package cn.albumen.library.config;
+package cn.albumen.library.config.configuration;
 
+import cn.albumen.library.security.LogInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

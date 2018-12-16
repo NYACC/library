@@ -1,4 +1,4 @@
-package cn.albumen.library.config;
+package cn.albumen.library.config.configuration;
 
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.Bean;

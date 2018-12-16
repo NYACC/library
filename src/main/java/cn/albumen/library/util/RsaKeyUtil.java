@@ -21,15 +21,15 @@ import static cn.albumen.library.constant.SecurityConfig.PEM_KEY_PATH;
  *
  * @author Albumen
  */
-public class RsaKeyTool {
-    private final static Logger logger = LoggerFactory.getLogger(RsaKeyTool.class);
-    private static RsaKeyTool instance = new RsaKeyTool();
+public class RsaKeyUtil {
+    private final static Logger logger = LoggerFactory.getLogger(RsaKeyUtil.class);
+    private static RsaKeyUtil instance = new RsaKeyUtil();
 
     private RSAPrivateKey privateKey;
     private RSAPublicKey publicKey;
 
 
-    public RsaKeyTool() {
+    public RsaKeyUtil() {
         try {
             loadPublicKey();
         } catch (Exception e) {
@@ -45,7 +45,7 @@ public class RsaKeyTool {
         return publicKey;
     }
 
-    public static RsaKeyTool getInstance() {
+    public static RsaKeyUtil getInstance() {
         return instance;
     }
 

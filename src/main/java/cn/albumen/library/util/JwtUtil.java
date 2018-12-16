@@ -15,9 +15,9 @@ import java.util.Date;
 /**
  * @author Albumen
  */
-public class Jwt {
-    private static RSAPublicKey publicKey = RsaKeyTool.getInstance().getPublicKey();
-    private static RSAPrivateKey privateKey = RsaKeyTool.getInstance().getPrivateKey();
+public class JwtUtil {
+    private static RSAPublicKey publicKey = RsaKeyUtil.getInstance().getPublicKey();
+    private static RSAPrivateKey privateKey = RsaKeyUtil.getInstance().getPrivateKey();
     private static Algorithm algorithmRS = Algorithm.RSA256(publicKey, privateKey);
 
     public static String create(String userName) {

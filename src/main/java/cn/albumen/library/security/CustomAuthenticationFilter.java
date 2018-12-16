@@ -3,7 +3,7 @@ package cn.albumen.library.security;
 import cn.albumen.library.constant.HttpConst;
 import cn.albumen.library.constant.PageCodeEnum;
 import cn.albumen.library.service.impl.GrantedAuthorityImpl;
-import cn.albumen.library.util.Jwt;
+import cn.albumen.library.util.JwtUtil;
 import cn.albumen.library.util.PageCodeUtil;
 import cn.albumen.library.util.RedisUtil;
 import cn.albumen.library.util.ServletUtil;
@@ -41,7 +41,7 @@ public class CustomAuthenticationFilter extends BasicAuthenticationFilter {
             if (id != null && !id.isEmpty() && token != null && !token.isEmpty()) {
                 String tokenRedis = redisUtil.get(id);
                 if (tokenRedis != null && tokenRedis.compareTo(token.substring(HttpConst.AUTHORIZATION_PREFIX.length())) == 0) {
-                    String[] ret = Jwt.verifyWithPermission(token.substring(HttpConst.AUTHORIZATION_PREFIX.length()), id);
+                    String[] ret = JwtUtil.verifyWithPermission(token.substring(HttpConst.AUTHORIZATION_PREFIX.length()), id);
                     if (ret != null) {
                         //验证成功
                         ArrayList<GrantedAuthority> authorities = new ArrayList<>();

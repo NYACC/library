@@ -5,7 +5,7 @@ import cn.albumen.library.constant.HttpConst;
 import cn.albumen.library.constant.LevelConst;
 import cn.albumen.library.constant.PageCodeEnum;
 import cn.albumen.library.dao.LogDao;
-import cn.albumen.library.util.Jwt;
+import cn.albumen.library.util.JwtUtil;
 import cn.albumen.library.util.NetworkUtil;
 import cn.albumen.library.util.PageCodeUtil;
 import cn.albumen.library.util.RedisUtil;
@@ -53,7 +53,7 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler, Authent
                             .collect(Collectors.toList());
             String[] permission = authorities.toArray(new String[authorities.size()]);
 
-            token = Jwt.create(authentication.getName(), permission);
+            token = JwtUtil.create(authentication.getName(), permission);
             redisUtil.set(authentication.getName(), token);
             // 登录成功后，返回token到header里面
             response.addHeader(HttpConst.AUTHORIZATION, HttpConst.AUTHORIZATION_PREFIX + token);

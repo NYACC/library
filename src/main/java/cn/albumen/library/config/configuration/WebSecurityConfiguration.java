@@ -1,4 +1,4 @@
-package cn.albumen.library.config;
+package cn.albumen.library.config.configuration;
 
 import cn.albumen.library.security.*;
 import cn.albumen.library.util.RedisUtil;

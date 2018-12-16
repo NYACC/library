@@ -1,4 +1,4 @@
-package cn.albumen.library.config;
+package cn.albumen.library.config.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
