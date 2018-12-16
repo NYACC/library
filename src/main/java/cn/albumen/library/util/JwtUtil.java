@@ -54,12 +54,11 @@ public class JwtUtil {
             JWTVerifier verifier = JWT.require(algorithmRS)
                     .withIssuer("Albumen")
                     .withSubject(userName)
-                    .build(); //Reusable verifier instance
+                    .build();
             DecodedJWT jwt = verifier.verify(token);
             return true;
         } catch (JWTVerificationException exception) {
             return false;
-            //Invalid signature/claims
         }
     }
 
@@ -68,12 +67,11 @@ public class JwtUtil {
             JWTVerifier verifier = JWT.require(algorithmRS)
                     .withIssuer("Albumen")
                     .withSubject(userName)
-                    .build(); //Reusable verifier instance
+                    .build();
             DecodedJWT jwt = verifier.verify(token);
             return jwt.getClaim("Permission").asArray(String.class);
         } catch (JWTVerificationException exception) {
             return null;
-            //Invalid signature/claims
         }
     }
 
@@ -81,12 +79,11 @@ public class JwtUtil {
         try {
             JWTVerifier verifier = JWT.require(algorithmRS)
                     .withIssuer("auth0")
-                    .build(); //Reusable verifier instance
+                    .build();
             DecodedJWT jwt = verifier.verify(token);
             return true;
         } catch (JWTVerificationException exception) {
             return false;
-            //Invalid signature/claims
         }
     }
 }
