@@ -69,7 +69,7 @@ public class UserDetailServiceImpl implements UserDetailService {
     public boolean delete(UserDetail userDetail) {
         boolean flag = userSecurityService.checkIDPermission(userDetail.getLoginUserId(), userDetail.getUserId());
         if (flag) {
-            userDetail = userDetailDao.select(userDetail);
+            userDetail = userDetailDao.selectById(userDetail);
             int row = userDetailDao.delete(userDetail);
             return (row == 1);
         } else {

@@ -116,10 +116,10 @@ public class BookDetailServiceImpl implements BookDetailService {
      */
     @Override
     public boolean updateBackBook(BookDetail bookDetail) {
+        BookDetail bookDetailTmp = bookDetailDao.selectById(bookDetail);
         boolean permission = userSecurityService.checkIdCategoryStaff(bookDetail.getLoginUserId())
-                || bookDetail.getLoginUserId().equals(bookDetail.getRentUserId());
+                || bookDetail.getLoginUserId().equals(bookDetailTmp.getRentUserId());
         if (permission) {
-            BookDetail bookDetailTmp = bookDetailDao.selectById(bookDetail);
             if (bookDetailTmp.getRent().equals(RentConst.RENTED)) {
                 BookDetail bookDetailUpdate = new BookDetail();
                 bookDetailUpdate.setId(bookDetail.getId());

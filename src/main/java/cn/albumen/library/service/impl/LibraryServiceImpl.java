@@ -30,6 +30,7 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public LibraryDto selectById(Library library) {
         LibraryDto libraryDto = libraryDao.selectById(library);
+        libraryDto.getCurator().setPassword(null);
         return libraryDto;
     }
 
@@ -44,6 +45,9 @@ public class LibraryServiceImpl implements LibraryService {
         List<LibraryDto> libraryDtoList = libraryDao.selectByCurator(library);
         if (libraryDtoList.isEmpty()) {
             return null;
+        }
+        for (LibraryDto libraryDto : libraryDtoList) {
+            libraryDto.getCurator().setPassword(null);
         }
         return libraryDtoList;
     }
@@ -60,6 +64,9 @@ public class LibraryServiceImpl implements LibraryService {
         List<LibraryDto> libraryDtoList = libraryDao.selectLimit(library);
         if (libraryDtoList.isEmpty()) {
             return null;
+        }
+        for (LibraryDto libraryDto : libraryDtoList) {
+            libraryDto.getCurator().setPassword(null);
         }
         return libraryDtoList;
     }
