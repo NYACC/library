@@ -1,6 +1,7 @@
 package cn.albumen.library.dao;
 
 import cn.albumen.library.bean.BookCategory;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * @author Albumen
  */
+@Mapper
 @Repository
 public interface BookCategoryDao {
     /**
@@ -16,6 +18,8 @@ public interface BookCategoryDao {
      * @param bookCategory
      * @return
      */
+    @Insert({"insert into book_category(name)" +
+            "   values (#{name})"})
     int add(BookCategory bookCategory);
 
     /**
@@ -24,6 +28,8 @@ public interface BookCategoryDao {
      * @param bookCategory
      * @return
      */
+    @Delete({"delete from book_category" +
+            "   where id = #{id}"})
     int delete(BookCategory bookCategory);
 
     /**
@@ -32,6 +38,9 @@ public interface BookCategoryDao {
      * @param bookCategory
      * @return
      */
+    @Update({"update book_category " +
+            "   set name = #{name}" +
+            "   where id = #{id}"})
     int update(BookCategory bookCategory);
 
     /**
@@ -40,6 +49,8 @@ public interface BookCategoryDao {
      * @param bookCategory
      * @return
      */
+    @Select({"select * from book_category" +
+            "   where id = #{id}"})
     BookCategory selectById(BookCategory bookCategory);
 
     /**
@@ -47,6 +58,7 @@ public interface BookCategoryDao {
      *
      * @return
      */
+    @Select({"select * from book_category"})
     List<BookCategory> selectAll();
 
     /**
@@ -55,5 +67,11 @@ public interface BookCategoryDao {
      * @param bookCategory 条数
      * @return
      */
+    @Select({"<script>" +
+            "   select * from book_category" +
+            "   <if test=\"start != null and count != null\">" +
+            "       limit #{start},#{count}" +
+            "   </if>" +
+            "</script>"})
     List<BookCategory> selectLimit(BookCategory bookCategory);
 }
