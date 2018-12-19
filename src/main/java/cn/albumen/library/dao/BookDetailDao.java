@@ -100,12 +100,12 @@ public interface BookDetailDao {
             "       book_detail.id," +
             "       book_detail.isbn," +
             "       book_detail.`name`," +
-            "       book_detail.category_id," +
+            "       book_detail.category_id as categoryId," +
             "       book_detail.author," +
             "       book_detail.rent," +
-            "       book_detail.rent_time," +
-            "       book_detail.rent_back_time," +
-            "       book_detail.rent_user_id," +
+            "       book_detail.rent_time as rentTime," +
+            "       book_detail.rent_back_time as rentBackTime," +
+            "       book_detail.rent_user_id as rentUserId," +
             "       book_category.`name` AS category" +
             "   FROM" +
             "       book_detail" +
@@ -125,12 +125,12 @@ public interface BookDetailDao {
             "       book_detail.id," +
             "       book_detail.isbn," +
             "       book_detail.`name`," +
-            "       book_detail.category_id," +
+            "       book_detail.category_id as categoryId," +
             "       book_detail.author," +
             "       book_detail.rent," +
-            "       book_detail.rent_time," +
-            "       book_detail.rent_back_time," +
-            "       book_detail.rent_user_id," +
+            "       book_detail.rent_time as rentTime," +
+            "       book_detail.rent_back_time as rentBackTime," +
+            "       book_detail.rent_user_id as rentUserId," +
             "       book_category.`name` AS category" +
             "   FROM" +
             "       book_detail" +
@@ -155,12 +155,12 @@ public interface BookDetailDao {
             "       book_detail.id," +
             "       book_detail.isbn," +
             "       book_detail.`name`," +
-            "       book_detail.category_id," +
+            "       book_detail.category_id as categoryId," +
             "       book_detail.author," +
             "       book_detail.rent," +
-            "       book_detail.rent_time," +
-            "       book_detail.rent_back_time," +
-            "       book_detail.rent_user_id," +
+            "       book_detail.rent_time as rentTime," +
+            "       book_detail.rent_back_time as rentBackTime," +
+            "       book_detail.rent_user_id as rentUserId," +
             "       book_category.`name` AS category" +
             "   FROM" +
             "       book_detail" +
@@ -186,12 +186,12 @@ public interface BookDetailDao {
             "       book_detail.id," +
             "       book_detail.isbn," +
             "       book_detail.`name`," +
-            "       book_detail.category_id," +
+            "       book_detail.category_id as categoryId," +
             "       book_detail.author," +
             "       book_detail.rent," +
-            "       book_detail.rent_time," +
-            "       book_detail.rent_back_time," +
-            "       book_detail.rent_user_id," +
+            "       book_detail.rent_time as rentTime," +
+            "       book_detail.rent_back_time as rentBackTime," +
+            "       book_detail.rent_user_id as rentUserId," +
             "       book_category.`name` AS category" +
             "   FROM" +
             "       book_detail" +
@@ -214,12 +214,12 @@ public interface BookDetailDao {
             "       book_detail.id," +
             "       book_detail.isbn," +
             "       book_detail.`name`," +
-            "       book_detail.category_id," +
+            "       book_detail.category_id as categoryId," +
             "       book_detail.author," +
             "       book_detail.rent," +
-            "       book_detail.rent_time," +
-            "       book_detail.rent_back_time," +
-            "       book_detail.rent_user_id," +
+            "       book_detail.rent_time as rentTime," +
+            "       book_detail.rent_back_time as rentBackTime," +
+            "       book_detail.rent_user_id as rentUserId," +
             "       book_category.`name` AS category" +
             "   FROM" +
             "       book_detail" +

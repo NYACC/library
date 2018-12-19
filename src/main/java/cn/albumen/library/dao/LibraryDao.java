@@ -19,7 +19,7 @@ public interface LibraryDao {
      * @param library
      * @return
      */
-    @Select({"select * from library where id = #{id}"})
+    @Select({"select id, name, location, curator_id as curatorId from library where id = #{id}"})
     @Results({@Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "location", column = "location"),
@@ -33,7 +33,7 @@ public interface LibraryDao {
      * @param library
      * @return
      */
-    @Select({"select * from library where curator_id = #{curatorId}"})
+    @Select({"select id, name, location, curator_id as curatorId from library where curator_id = #{curatorId}"})
     @Results({@Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "location", column = "location"),
@@ -48,7 +48,7 @@ public interface LibraryDao {
      * @return
      */
     @Select({"<script>" +
-            " select * from library" +
+            " select id, name, location, curator_id as curatorId from library" +
             "   <if test=\"start != null and count != null\">" +
             "       limit #{start},#{count}" +
             "   </if>" +

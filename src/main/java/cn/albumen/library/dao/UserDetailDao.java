@@ -18,7 +18,7 @@ public interface UserDetailDao {
      * @param userDetail
      * @return
      */
-    @Select({"select id,user_id,sex,name,location from user_detail" +
+    @Select({"select id,user_id as userId,sex,name,location from user_detail" +
             "   where user_id = #{userId}"})
     UserDetail select(UserDetail userDetail);
 
@@ -28,7 +28,7 @@ public interface UserDetailDao {
      * @param userDetail
      * @return
      */
-    @Select({"select id,user_id,sex,name,location from user_detail" +
+    @Select({"select id,user_id as userId,sex,name,location from user_detail" +
             "   where id = #{id}"})
     UserDetail selectById(UserDetail userDetail);
 
@@ -39,7 +39,7 @@ public interface UserDetailDao {
      * @return
      */
     @Select({"<script>" +
-            "   select c.id,c.user_id,c.sex,c.name,c.location" +
+            "   select c.id,c.user_id as userId,c.sex,c.name,c.location" +
             "   from user_detail c,user_security s" +
             "   where " +
             "       c.user_id = s.id " +

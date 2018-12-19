@@ -18,7 +18,7 @@ public interface UserSecurityDao {
      * @param userSecurity
      * @return 所查询到的用户
      */
-    @Select({"select id, user_no, phone, mail, password, permission from user_security " +
+    @Select({"select id, user_no as userNo, phone, mail, password, permission from user_security " +
             "   where user_no = #{userNo}"})
     UserSecurity selectByNo(UserSecurity userSecurity);
 
@@ -28,7 +28,7 @@ public interface UserSecurityDao {
      * @param userSecurity
      * @return 所查询到的用户
      */
-    @Select({"select id, user_no, phone, mail, password, permission from user_security " +
+    @Select({"select id, user_no as userNo, phone, mail, password, permission from user_security " +
             "   where id = #{id}"})
     UserSecurity selectById(UserSecurity userSecurity);
 
@@ -38,7 +38,7 @@ public interface UserSecurityDao {
      * @param id
      * @return 所查询到的用户
      */
-    @Select({"select user_no, phone, mail, password, permission from user_security " +
+    @Select({"select user_no as userNo, phone, mail, password, permission from user_security " +
             "   where id = #{id}"})
     UserSecurity selectByCuratorId(Integer id);
 
@@ -48,8 +48,8 @@ public interface UserSecurityDao {
      * @param userSecurity
      * @return
      */
-    @Insert({"insert into user_security(id, user_no, phone, mail, password, permission) " +
-            "   values (#{id},#{userNo},#{phone},#{mail},#{password},#{permission})"})
+    @Insert({"insert into user_security(user_no, phone, mail, password, permission) " +
+            "   values (#{userNo},#{phone},#{mail},#{password},#{permission})"})
     int addUser(UserSecurity userSecurity);
 
     /**
@@ -88,7 +88,7 @@ public interface UserSecurityDao {
      * @return
      */
     @Select({"<script>" +
-            "   select * from user_security" +
+            "   select user_no as userNo, phone, mail, password, permission from user_security" +
             "   where permission > #{permission} or id = #{id}" +
             "   <if test=\"start != null and count != null\">" +
             "       limit #{start},#{count}" +
