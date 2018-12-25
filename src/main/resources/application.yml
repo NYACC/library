@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/library?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false
+      username: root
+      password: 123456
+
+redis:
+  host:
+    ip: 127.0.0.1
+  port: 6379
+  timeout: 3000
+  maxIdle: 6
+  maxTotal: 20
+  maxWaitMillis: 3000
+  minEvictableIdleTimeMillis: 300000
+  numTestsPerEvictionRun: 4
+  timeBetweenEvictionRunsMillis: 30000
+
+debug: true
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
