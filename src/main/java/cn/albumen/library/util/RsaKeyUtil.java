@@ -7,13 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.security.KeyPair;
 import java.security.Security;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
-import static cn.albumen.library.constant.SecurityConfig.PEM_KEY_PATH;
 
 /**
  * 单例模式生成RSA
@@ -51,7 +50,7 @@ public class RsaKeyUtil {
 
 
     private void loadPublicKey() throws Exception {
-        BufferedReader br = new BufferedReader(new FileReader(PEM_KEY_PATH));
+        BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/pem")));
         Security.addProvider(new BouncyCastleProvider());
         KeyPair kp = (KeyPair) new PEMReader(br).readObject();
 

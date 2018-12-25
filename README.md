@@ -27,7 +27,7 @@ cn.albumen.library.util </br>
 [eoLinker](https://www.eolinker.com/#/share/index?shareCode=DnawFZ)
 
 ## 环境配置
-1. 修改 cn.albumen.library.constant.SecurityConfig 中 PEM_KEY_PATH 所指向的地址到当前项目路径下Key目录
+1. ~~修改 cn.albumen.library.constant.SecurityConfig 中 PEM_KEY_PATH 所指向的地址到当前项目路径下Key目录~~
 2. 运行 ./sql/library.sql 导入数据库
 
 ## RequestWrapper
